@@ -1,0 +1,75 @@
+<app-header></app-header>
+<head>
+    <title>
+        TIEJOB
+    </title>
+</head>
+<div class="con">
+    <div class="pp1">
+        <div>
+        <div class="titre">
+        <h1>
+        Les offres <span class="sp1">reçues</span> </h1>
+        </div>  
+        </div>
+        </div>
+<div class="p">
+    <div class="profil" *ngIf="off">
+        <div class="head">
+            <div class="image">
+                <img [src]="url" alt="image_employeur">
+                <div class="icon">
+    
+                    <a href="https://www.google.tn/maps/place/{{off.employeur.gouvernerat}}" target="_blank"><i class='bx bxs-map pen'></i></a>
+                </div>
+            </div>
+            <div class="nom">
+                <p>{{off.employeur.nom}}</p>
+            </div>
+        </div>
+        <div class="info">
+            <div class="p1">
+                <div class="input">
+                    <label for="#">Numéro de téléphone</label>
+                    <p>{{off.employeur.num}}</p>
+                </div>
+                <div class="input">
+                    <label for="#">Email</label>
+                    <p>{{off.employeur.email}}</p>
+                </div>
+            </div>
+        
+     
+          
+          
+            </div>
+            <div class="p3">
+                <h2>Off<span class="s">re</span> </h2>
+                <div class="offre">
+        
+            
+            <div class="c"id="offre">
+     <div class="cadre">
+        <div class="d">
+            <i class='bx bxs-briefcase-alt-2'></i>
+            
+            <p>{{off.descriptionoffre}}</p>
+        </div>
+        
+     </div>
+         
+             </div>
+          
+            
+                 
+    
+                </div>
+            </div>
+    
+        </div>
+</div>
+ 
+ 
+</div>
+<app-footer></app-footer>
+

@@ -1,0 +1,101 @@
+<app-header></app-header>
+<div class="con">
+    <div class="pp1">
+        <div>
+            <div class="titre">
+                <h1>
+                    Détails <span class="sp1">personnel</span> </h1>
+                        </div>
+        </div>
+            </div>
+   <div class="p">
+    <div class="profil" *ngIf="emp">
+        <div class="head">
+            <div class="image">
+                <img [src]="url" alt="image_user">
+                <div class="icon">
+                  
+                   <a href="/updateemp"> <i class='bx bx-pencil pen'></i></a>
+                
+                   <div (click)="toggleDropdown()" class="nbo" >  <i [style]="bcolor" class='bx bxs-bell pen'> </i>
+                    <span class="icon-button__badge" *ngIf="nombreOffres > 0">{{nombreOffres}}</span>
+                   </div>
+                <div *ngIf="isDropdownOpen" class="dropdown-content" >
+                    <div *ngFor="let offre of ofs">
+                    <a  (click)="navigate(offre.id)">
+                        <span class="cafe">{{offre.employeur.nom}}</span>  vous envoyez une offre</a>
+                    
+                    </div>
+                    
+                  </div>
+
+                 <i (click)="logout()" class='bx bx-exit pen'></i>
+             
+                
+                </div>
+            </div>
+            <div class="nom">
+             <div class="n">   <p>{{emp.nom}}</p></div> <div class="vcv" *ngIf="cv"><p><a href="assets/{{cv.titlefile}}" target="_blank">Voir CV</a></p></div>
+            </div>
+        </div>
+        <div class="info">
+            <div class="p1">
+                <div class="input">
+                    <label for="#">Numéro de téléphone</label>
+                    <p class="g">{{emp.num}}</p>
+                </div>
+                <div class="input">
+                    <label for="#">Email</label>
+                    <p class="g">{{emp.email}}</p>
+                </div>
+            </div>
+            <div class="p2">
+                <h2>Données <span class="s">Personnelles</span></h2>
+                <div class="donnee">
+                    <table>
+            
+                        <tr>
+                            <td class="t">Nom</td>
+                            <td class="g">{{emp.nom}}</td>
+                        </tr>
+                        <tr>
+                            <td class="t">Date de naissance</td>
+                            <td class="g">{{emp.date_nais}}</td>
+                        </tr>
+                        <tr>
+                            <td class="t">Sexe</td>
+                            <td class="g">{{emp.sexe}}</td>
+                        </tr>
+                        <tr>
+                            <td class="t">Etat</td>
+                            <td class="g">{{emp.etat}}</td>
+                        </tr>
+                        <tr>
+                            <td class="t">Spécialité</td>
+                            <td class="g">{{emp.specialite}}</td>
+                        </tr>
+                        <tr>
+                            <td class="t">Expérience</td>
+                            <td class="g">{{emp.exp}}</td>
+                        </tr>
+                        <tr>
+                            <td class="t">Région</td>
+                            <td class="g">{{emp.gouvernerat}}</td>
+                        </tr>
+                        <tr>
+                            <td class="t">City</td>
+                            <td class="g">{{emp.city}}</td>
+                        </tr>
+                       
+                    </table>
+                  
+                </div>
+            </div>
+        
+    
+        </div>
+        </div>
+   </div>
+
+</div>
+<app-footer></app-footer>

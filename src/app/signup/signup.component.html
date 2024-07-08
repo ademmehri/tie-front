@@ -1,0 +1,69 @@
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<title>Inscription-TIEJOB</title>
+</head>
+<section>
+ <div class="pp1">
+  <div class="p1">
+    <div class="img">
+      <img routerLink="/pageprincipale" src="assets/log.png" alt="logo_TIEJOB">
+    </div>
+   <div class="t">
+    <h2>
+      Inscription</h2>
+   </div>
+   <div class="g">  <div class="bar"></div></div>
+<div class="med">
+  <form [formGroup]="formsignin">
+  
+   <div class="input" >
+     <p>Nom et prénom <span>*</span></p>
+     <div class="i d" [style]="bnom">
+       <i class='bx bx-user'></i>
+       <input type="text" placeholder="Nom et prénom" formControlName="nom">
+     </div>
+   </div>
+
+   
+    <div class="input" >
+     <p>Adresse e-mail <span>*</span></p>
+     <div class="i d" [style]="bemail">
+       <i class='bx bx-envelope'></i>
+       <input type="text" placeholder="Adresse e-mail" formControlName="email">
+     </div>
+   </div>
+
+<div class="input" >
+  <p for="#">Numéro de téléphone <span>*</span></p>
+<div class="i d" [style]="bnumero">
+  <i class='bx bxs-phone'></i>
+  <input placeholder="Numéro de téléphone" type="text" formControlName="numero" >
+</div>
+</div>
+<div class="input" >
+  <p for="#">Mot de passe <span>*</span></p>
+<div class="i d" [style]="bpassword">
+  <i class='bx bx-lock-alt'></i>
+  <input placeholder="Mot de passe " type="password" formControlName="password" >
+</div>
+</div>
+<p class="err">{{password}}</p>
+
+ <div class="b">
+   <div class="bt">
+     <a (click)="onsubmit()">Suivant<i class='bx bx-right-arrow-alt'></i></a>
+   </div>
+ </div>
+ <div class="text">
+  <p>Avez-vous déjà un compte ?</p><a routerLink="/login">Connexion</a>
+</div>
+     </form>
+</div>
+  </div>
+ </div>
+    <div class="p2">
+ <img src="assets/sign.webp" alt="image_employee">
+    </div>
+
+</section>

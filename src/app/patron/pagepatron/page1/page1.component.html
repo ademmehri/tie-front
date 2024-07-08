@@ -1,0 +1,159 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<app-header></app-header>
+
+<section>
+  <div class="b">
+    <div class="sb">
+     <div class="titre">
+      <h2>Cherchez <span>nos talents</span></h2>
+     </div>
+      <div class="navbar">
+       <div class="relod" (click)="verfieracces()">
+        <i class='bx bx-revision'></i>
+       </div>
+      
+              <div class="re">
+                <i class='bx bxs-user'></i>
+                <select  class="select" (change)="onselectetat($event)">
+                  <option value="1">Choisir votre Candidat</option>
+                  <option value="Employee">Employee</option>
+                  <option value="Stagiare">Stagiare</option>
+                </select>
+              </div>
+         
+            
+            <div class="ba"></div>
+           
+              <div class="re">
+                <i class='bx bxs-graduation'></i>
+                <select  class="select" (change)="onselect($event)"  *ngIf="test=='superieur' && empr.specialite=='Hotel'">
+                  <option value="1" >Choisir votre Spécilalité</option>
+              <option  *ngFor="let t of hotelsup" value="{{t}}">{{t}}</option>
+                </select>
+                <select  class="select" (change)="onselect($event)"  *ngIf="test=='restaurer'  && empr.specialite=='Hotel'">
+                  <option value="1" >Choisir votre Spécilalité</option>
+              <option  *ngFor="let t of hotelrest" value="{{t}}">{{t}}</option>
+                </select>
+                <select  class="select" (change)="onselect($event)"  *ngIf="test=='servir'  && empr.specialite=='Hotel'">
+                  <option value="1" >Choisir votre Spécilalité</option>
+              <option  *ngFor="let t of hotelserv" value="{{t}}">{{t}}</option>
+                </select>
+
+                <select  class="select" (change)="onselect($event)"  *ngIf="test=='superieur' && empr.specialite!='Hotel'">
+                  <option value="1" >Choisir votre Spécilalité</option>
+              <option  *ngFor="let t of sup" value="{{t}}">{{t}}</option>
+                </select>
+                <select  class="select" (change)="onselect($event)"  *ngIf="test=='restaurer'  && empr.specialite!='Hotel'">
+                  <option value="1" >Choisir votre Spécilalité</option>
+              <option  *ngFor="let t of rest" value="{{t}}">{{t}}</option>
+                </select>
+                <select  class="select" (change)="onselect($event)"  *ngIf="test=='servir'  && empr.specialite!='Hotel'">
+                  <option value="1" >Choisir votre Spécilalité</option>
+              <option  *ngFor="let t of serv" value="{{t}}">{{t}}</option>
+                </select>
+                <select  class="select" (change)="onselect($event)"  *ngIf="test=='gold'  && empr.specialite!='Hotel'">
+                  <option value="1" >Choisir votre Spécilalité</option>
+              <option  *ngFor="let t of gold" value="{{t}}">{{t}}</option>
+                </select>
+                <select  class="select" (change)="onselect($event)"  *ngIf="test=='gold'  && empr.specialite=='Hotel'">
+                  <option value="1" >Choisir votre Spécilalité</option>
+              <option  *ngFor="let t of hotelgold" value="{{t}}">{{t}}</option>
+                </select>
+              </div>
+         
+          
+           
+             <div class="ba"></div>
+            
+              <div class="re">
+                <i class='bx bx-map-pin'></i>
+                <select  class="select" (change)="onselectreg($event)">
+                  <option value="">Gouvernerat</option>
+                  <option value="ariana">ariana</option>
+                  <option value="ben aarous">ben aarous</option>
+                  <option value="bizerte">bizerte</option>
+                  <option value="Béja">Béja</option>
+                  <option value="Gabès">Gabès</option>
+                  <option value="Gafsa">Gafsa</option>
+                  <option value="Jendouba">Jendouba</option>
+                  <option value="Kairouan">Kairouan</option>
+                  <option value="Kasserine">Kasserine</option>
+                  <option value="Kébili">Kébili</option>
+                  <option value="Le Kef">Le Kef</option>
+                  <option value="Gafsa">Gafsa</option>
+                  <option value="Mahdia">Mahdia</option>
+                  <option value="La Manouba">La Manouba</option>
+                  <option value="Médenine">Médenine</option>
+                  <option value="Monastir">Monastir</option>
+                  <option value="Nabeul">Nabeul</option>
+                  <option value="Sfax">Sfax</option>
+                  <option value="Sidi Bouzid">Sidi Bouzid</option>
+                  <option value="Siliana">Siliana</option>
+                  <option value="Sousse">Sousse</option>
+                  <option value="Tozeur">Tozeur</option>
+                  <option value="Tunis">Tunis</option>
+                  <option value="Zaghouan">Zaghouan</option>
+                </select>
+              </div>
+        
+            <div class="ba"></div>
+          
+              <div class="re">
+                <i class='bx bx-group'></i>
+                <select  class="select" (change)="onselectsexe($event)">
+                  <option value="1">Choisir votre Sexe</option>
+                  <option value="Homme">Homme</option>
+                  <option value="Femme">Femme</option>
+                  <option value="tous">tous</option>
+                
+                </select>
+              </div>
+                <div class="bt" ><i class='bx bx-filter-alt'></i><a  (click)="rechercher()">Rechercher</a></div>
+          </div>
+    </div>
+          
+    </div>
+      <div class="employee" > 
+        <div *ngFor="let emp of employees  | paginate
+        : { itemsPerPage: 12, currentPage: p, totalItems: totalItems }">
+          <div class="card"  (click)="naviguer(emp.id)">
+            <div class="ico">
+            
+                <div *ngIf=" emp.files.length==0">
+                  <img src="assets\backpatron.png" alt="image">
+                </div>     
+                <div *ngIf=" emp.files.length!=0">
+                  <img src="assets\{{emp.files[0].titlefile}}" alt="image">
+                </div>   
+              
+            </div>
+            <div class="info">
+              <div class="d">
+                <div class="d2">
+                  <p class="sp">{{emp.nom}}</p>
+                  <p class="nom">{{emp.gouvernerat}}</p>
+                </div>
+              </div>
+              <p class="num sp">{{emp.num}}</p>
+            </div>
+          </div>
+        </div>
+        
+      
+
+      </div>
+   <div class="pag">
+    <pagination-controls
+    class="custom-pagination-controls"
+    (pageChange)="p = $event"
+    [maxSize]="5"
+    [directionLinks]="true"
+    [autoHide]="false"
+  ></pagination-controls>
+   </div>
+      <app-footer></app-footer>
+</section>
+
+
+

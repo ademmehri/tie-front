@@ -1,0 +1,73 @@
+<app-header></app-header>
+<section class="pcv">
+    <div class="pp1">
+        <div>
+            <div class="titre">
+                <h1>
+                    Détails <span class="sp1">Employé</span> </h1>
+                        </div>
+                
+        </div>
+            </div>
+ <div class="cvv" *ngIf="emp" >
+    <div class="right">
+        <div class="head">
+            <div class="image">
+                <div class="circle">
+                    <img [src]="url" alt="image_employee">
+                    </div>
+
+            </div>
+            <div class="nom">
+<p class="titre1">{{emp.nom}}</p>
+            </div>
+            <div class="cv" *ngIf="cv" >
+                <a href="assets/{{this.cv.titlefile}}" target="_blank" >Voir CV</a>
+             </div>
+        </div>
+        <div class="body">
+            <div class="exp">
+           <div class="contact">
+            <p class="titre2">Contact</p>
+        <table>
+<tr><td class="ic"><i class='bx bx-envelope' ></i></td><td><p>{{emp.email}}</p></td></tr>
+<tr><td class="ic"><i class='bx bxs-phone'></i></td><td><p>{{emp.num}}</p></td></tr>
+<tr><td class="ic"><i class='bx bx-briefcase'></i></td><td><p>{{emp.specialite}}</p></td></tr>
+        </table>
+           </div>
+           <div class="experience">
+            <p class="titre2">
+                Experience
+            </p>
+            <p>
+         {{emp.exp}}
+            </p>
+           </div>
+            </div>
+
+        </div>
+        <form [formGroup]="formsignin">
+            <div class="ajout">
+          
+                <p class="titre2 ti">Envoyez un offre</p>
+                <textarea name="" id="" cols="35" rows="5" formControlName="offre"></textarea>
+            </div>
+            <p class="error">{{result1}}</p>
+            <div class="btt">
+                <div class="an" (click)="annuler()">
+                  <a>Annuler</a>
+                </div>
+                <div class="b" (click)="onsubmit()" >
+                  <a>Enrigistrer</a>
+                </div>
+              </div>
+                
+        </form>
+    
+
+
+    </div>
+
+ </div>
+</section>
+<app-footer></app-footer>

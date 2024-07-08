@@ -1,0 +1,122 @@
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<title>Inscription-TIEJOB</title>
+</head>
+<section>
+    <div class="form">
+        <div class="donnee">
+              <form [formGroup]="formsignin"  class="form">
+             <div class="p1">
+              <div class="img">
+                <img routerLink="/pageprincipale" src="assets/log.png" alt="logo_TIEJOB">
+              </div>
+              <div class="titre">
+                <h2>
+                  Inscription employeur</h2>
+              </div>
+            <div class="g">  <div class="bar"></div></div>
+              <div class="head">
+    
+                <div class="pp">
+                  <div class="circle">
+                  
+                    <img [src]="url"  alt="image_user">
+                  
+                    </div>
+                
+                </div>
+                  
+               <div class="upload">
+              
+                <input name="file" id="file" class="inputfile"  type="file" (change)="onselectfile($event)"/>
+                <label for="file" class="file"><i class='bx bx-upload'></i> Choisir une image</label>
+               </div>
+              
+                 </div>
+               
+    <div class="deux">
+      <div class="cinetnom">
+        <div class="cin">
+          <label for="#">Domaine <span>*</span></label>
+          <div class="cont t" [style]="bsp">
+            <i class='bx bxs-graduation'></i>
+            <select   formControlName="sp">
+              <option value="">Domaine</option>
+              <option value="Salon de thé">Salon de thé</option>
+              <option value="Resturant">Resturant</option>
+              <option value="Hotel">Hôtel</option>
+             </select>
+          </div>
+        
+        </div>
+       
+        <div class="cin">
+          <label for="#">Nom de l'entreprise<span>*</span></label>
+          <div class="cont t" [style]="bnom">
+            <i class='bx bx-user'></i>
+            <input type="text" placeholder="Nom entreprise" formControlName="nom">
+          </div>
+         
+        </div>
+       
+    </div>
+    <div class="cinetnom">
+      <div class="cin">
+        <label for="#">Numéro de téléphone<span>*</span></label>
+        <div class="cont t" [style]="bnumero">
+          <i class='bx bxs-phone'></i>
+          <input type="text" placeholder="Numéro" formControlName="numero">
+         
+        </div>
+       
+      </div>
+      <div class="cin">
+        <label for="#">Adresse<span>*</span></label>
+        <div class="cont t" [style]="bgov">
+          <i class='bx bx-buildings' ></i>
+          <input type="text" placeholder="Adresse" formControlName="gov">
+         
+        </div>
+     
+      </div>
+ 
+     
+  </div>
+    </div>
+            <div class="email">
+              <label for="#">Adresse e-mail<span>*</span></label>
+              <div class="cont d" [style]="bemail">
+                <i class='bx bx-envelope'></i>
+                <input type="text" placeholder="Adresse e-mail" formControlName="email">
+              </div>
+            
+            </div>
+          
+            <div class="email">
+              <label for="#">Mot de passe<span>*</span></label>
+              <div class="cont d" [style]="bmp">
+                <i class='bx bx-lock-alt'></i>
+                <input type="password" placeholder="Mot de passe" formControlName="mp">
+              </div>
+              <p class="m">{{mp}}</p>
+            </div>
+<div class="b">
+<div class="bt" (click)="onsubmit()">
+  <a >S'inscrire</a>
+</div>
+</div>
+<div class="text">
+  <p>
+    Avez-vous déjà un compte ?</p><a routerLink="/login">Connexion</a>
+</div>
+             </div>
+
+              </form>
+          </div>
+       
+    </div>
+<div class="p2">
+  <img src="assets/empr.webp" alt="image_employeur">
+</div>
+</section>

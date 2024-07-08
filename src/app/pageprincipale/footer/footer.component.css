@@ -1,0 +1,243 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Island+Moments&family=Kaushan+Script&family=Libre+Franklin:ital,wght@1,300&family=Merriweather:wght@900&family=Noto+Sans+JP:wght@100;300;400;500;700;900&family=Oswald:wght@200;600&family=Playfair+Display&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,500;1,100;1,300;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300&display=swap');
+section{
+    width: 100%;
+    height: 150%;
+    background-color: #202430;
+}
+.p1{
+padding-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+.p1 p{
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 52px;
+    text-align: center;
+    color: #fff;
+}
+.input{
+width: 531px;
+height: 53px;
+border-radius: 23px;
+color: #F8F8FE;
+background-color: #fff;
+display: flex;
+align-items: center;
+justify-content: center;
+margin-right: 20px;
+}
+input{
+    padding: 10px;
+    border: none;
+    width: 90%;
+    outline: none;
+}
+.bt{
+    width: 157px;
+    height: 54px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2772D6;
+color: #fff;
+cursor: pointer;
+}
+a{
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 26px;
+    color: #fff;
+}
+.d{
+    display: flex;
+}
+.p2{
+    margin-top: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 110%;
+    padding-bottom: 50px;
+    
+}
+.img{
+    padding-left: 120px;
+    width: 400px;
+    height: auto;
+    object-fit: cover;
+
+}
+.img img{
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+a{
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+   color: #fff;
+}
+.a{
+    padding-bottom: 30px;
+}
+.a a{
+    color: #fff;
+    cursor: pointer;
+}
+.rs p{
+    color: #fff;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+}
+.rs{
+    padding-right: 50px;
+ 
+}
+.ic i{
+    color: #fff;
+    font-size: 30px;
+    padding-right:30px;
+    cursor: pointer;
+}
+.p3{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    
+}
+.p3 p{
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 52px;
+    color: #fff;
+    padding-top: 40px;
+}
+span{
+    color:#2772D6;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 52px;
+}
+.num i{
+    font-size: 20px;
+    margin: 0px;
+    padding: 0px;
+
+}
+.num p{
+    padding: 5px;
+    margin: 0px;
+}
+.num .ic{
+    display: flex;
+    align-items: center;
+}
+.num .com{
+    color: #2772D6;
+}
+/* Media query pour les écrans de taille moyenne (tablette) */
+@media only screen and (max-width: 700px) {
+    
+ .p1{
+  display: none;
+ }
+ .p2{
+    flex-direction: column;
+    
+ }
+ section{
+    min-height: 650px;
+    width: 100%;
+ }
+ .img{
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0px;
+    padding-left: 0px;
+    margin-top: 30px;
+ }
+ .img img{
+    width: 170px;
+    height: 90px;
+ }
+ .p3{
+    display: none;
+ }
+ .list2{
+    margin-top: 25px;
+ }
+   .rs p{
+text-align: center;
+   }
+   .rs{
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   width: 100%;
+  padding-right: 0px;
+  margin-top: 15px;
+   }
+   .ic{
+    width: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+   }
+   .z{
+  
+    width: 70%;
+   }
+   .ic i{
+    padding-right: 10px;
+   }
+   .a{
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   }
+  }
+  @media screen and (min-width: 701px) and (max-width: 1024px) {
+.p1{
+    display: none;
+}
+.img{
+padding-left: 0px;
+
+width: fit-content;
+height: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+
+}
+.img img{
+    width: 200px;
+    height: 100px;
+    padding: 0px;
+    margin: 0px;  
+}
+.rs{
+    height: 100%;
+}
+  }
+  @media screen and (min-width: 901px) and (max-width: 1100px) {
+
+     }
+  
+ 

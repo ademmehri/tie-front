@@ -1,0 +1,92 @@
+<app-header></app-header>
+<div class="con" *ngIf="emp">
+    <div class="pp1">
+        <div>
+            <div class="titre">
+                <h1>
+                    Détails <span class="sp1">personnel</span> </h1>
+                        </div>
+                    
+                
+        </div>
+            </div>
+   <div class="p">
+    <div class="profil" >
+        <div class="head">
+            <div class="image" (click)="selctimg()">
+                <img [src]="url" alt="image_user"  (mouseenter)="afficherTexte = true" (mouseleave)="afficherTexte = false">
+                <div *ngIf="afficherTexte" class="overlay">
+                  <p>changez vos photo</p>
+                </div>
+            </div>
+           
+            <div class="nom">
+              <i class='bx bx-search fa'></i>
+            </div>
+
+        </div>
+        <div class="nom">
+          <p>{{emp.nom}}</p>
+        </div>
+        <div class="info">
+            <div class="p1">
+                <div class="input">
+                    <label for="#">Email</label>
+                    <p class="g">{{emp.email}}</p>
+                </div>
+            </div>
+            <div class="p2">
+              <form  [formGroup]="formsignin">
+                <h2>Données <span class="s">Personnelles</span></h2>
+                <div class="donnee">
+                    <table>
+                        <tr >
+                            <td class="t">Nom</td>
+                            <td class="g"><input type="text" [style]="bnpm" formControlName="nom"></td>
+                        </tr>
+                        <tr>
+                          <td class="t">Email</td>
+                          <td class="g"><input type="text" formControlName="email" [style]="bemail"></td>
+                      </tr>
+                     
+                        <tr>
+                          <td class="t">Téléphone</td>
+                          <td class="g"><input type="text" formControlName="num" [style]="bnumero"></td>
+                        </tr>
+                        <tr>
+                          <td class="t">Spécialité</td>
+                          <td class="g">
+                            <select formControlName="sp">
+  <option value="Salon de thé">Salon de thé</option>
+<option value="Resturant">Resturant</option>
+<option value="Hotel">Hôtel</option>
+                            </select>
+                          </td>
+                      </tr>
+                        <tr>
+                          <td class="t">Adresse</td>
+                          <td class="g"><input type="text" formControlName="gov" [style]="bgov"></td>
+                      </tr>
+                 
+                
+                    </table>
+                  
+                </div>
+              </form>
+            </div>
+            <div class="btt">
+              <div class="an" (click)="annuler()">
+                <a>Annuler</a>
+              </div>
+              <div class="b" (click)="modifier()">
+                <a>Enrigistrer</a>
+              </div>
+            </div>
+        </div>
+        </div>
+   </div>
+
+</div>
+<app-footer></app-footer>
+
+

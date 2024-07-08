@@ -1,0 +1,180 @@
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<section>
+<div class="s">
+    <div class="p1 f">
+        <div class="img">
+            <img src="assets/log.png"  alt="">
+        </div>
+        <div class="con">
+        <div class="menu">
+            <div class="ic" (click)="afficheuser()" >  
+                <i class='bx bxs-user'></i><p>Employé<p>
+            </div>
+            <div class="ic" (click)="afficheempr()" >  
+                <i class='bx bxs-user'></i><p>Employeur</p>
+            </div>
+            
+           
+           
+        </div>
+       
+        </div>
+            </div>
+            <div class="p2">
+                <div class="head">
+                   <div class="t">
+                   <h2>Tie Job</h2>
+                   </div>
+                   <div class="t2">
+                    <div class="rech">
+                        <i class='bx bx-search'></i><input type="text" placeholder="Rechercher">
+                    </div>
+                    <div class="icon">
+                        <i class='bx bx-envelope' ></i><i class='bx bxs-bell-ring'></i>
+                    </div>
+                 
+                   </div>
+                </div>
+            <div class="a1">
+                <div class="car" *ngIf="emp">
+                    <h3>Candidat</h3>
+                    <p>{{emp.length}}</p>
+                   </div>
+                <div class="car" *ngIf="emprcafe">
+                 <h3>Salon de Thé</h3>
+                 <p>{{emprcafe.length}}</p>
+                </div>
+                <div class="car" *ngIf="emprrest">
+                    <h3>Restaurant</h3>
+                    <p>{{emprrest.length}}</p>
+                   </div>
+                   <div class="car" *ngIf="emprhotel">
+                    <h3>Hotel</h3>
+                    <p>{{emprhotel.length}}</p>
+                   </div>
+            </div>
+            <div class="a2">
+                <div class="aa1" *ngIf="us && emp">
+                    <div class="tt">
+                        <p>Employé ({{emp.length}})</p>
+                     <div class="r">
+                        <select (change)="onSelectdomaine($event)" >
+                            <option value="tous">tous</option>
+                            <option *ngFor="let sp of sps" value="{{sp}}">{{sp}}</option>
+                        </select>
+                      
+                     </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <th>image</th>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Spécialité</th>
+                            <th>Adresse</th>
+                            <th>Numero</th>
+                        </thead>
+                        <tbody *ngFor="
+                        let e of emp
+                          | paginate
+                            : { itemsPerPage: 6, currentPage: p, totalItems: totalItems }
+                      ">
+                            <tr>
+                                <td *ngIf=" e.files.length==0"><div class="imgg"><img src="assets\backpatron.png" alt="image"></div></td>
+                                <td *ngIf=" e.files.length!=0"><div class="imgg"><img src="assets\{{e.files[0].titlefile}}" alt="image"></div></td>
+                                <td>{{e.nom}}</td>
+                                <td>{{e.email}}</td>
+                                <td>{{e.specialite}}</td>
+                                <td>{{e.gouvernerat}}</td>
+                                <td>{{e.num}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="aa1" *ngIf="us==false && empr">
+                    <div class="tt">
+                        <p>Employeur ({{empr.length}})</p>
+                        <select (change)="onSelecttype($event)">
+                            <option value="tous">tous</option>
+                            <option *ngFor="let d of ds" value="{{d}}">{{d}}</option>
+                        </select>
+                    </div>
+                    <table>
+                        <thead>
+                            <th>image</th>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>specialité</th>
+                            <th>Pack</th>
+                            <th>Durée</th>
+                            <th>Numero</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody *ngFor="
+                        let e of empr
+                          | paginate
+                            : { itemsPerPage: 6, currentPage: p, totalItems: totalItems }
+                      ">
+                            <tr>
+                                <td *ngIf=" e.files.length==0"><div class="imgg"><img src="assets\backpatron.png" alt="image"></div></td>
+                                <td *ngIf=" e.files.length!=0"><div class="imgg"><img src="assets\{{e.files[0].titlefile}}" alt="image"></div></td>
+                                <td>{{e.nom}}</td>
+                                <td>{{e.email}}</td>
+                                <td>{{e.specialite}}</td>
+                                <td class="p">{{e.pack}}</td>
+                                <td class="d">{{e.duree}}</td>
+                                <td>{{e.num}}</td>
+                                <td><div class="bt" (click)="afficherevent(e.id)">
+                                    <span>Modifier</span>
+                                </div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+              
+            </div>
+            <div class="pag">
+                <pagination-controls
+                class="custom-pagination-controls"
+                (pageChange)="p = $event"
+                [maxSize]="15"
+                [directionLinks]="true"
+                [autoHide]="false"
+              ></pagination-controls>
+               </div>
+            </div>
+        </div>
+      
+    </section>
+
+    <div class="re" [formGroup]="formsignin" *ngIf="show" >
+        <div class="card">
+          <div class="titre">
+            <h2>Modifer Pack</h2> <i (click)="annulerevent()" class='bx bx-x'></i>
+          </div>
+       <div class="ss">
+        <div class="i" >
+         <select formControlName="pa">
+            <option value=""  disabled selected>Pack</option>
+            <option value="0">SUPPERIEUR</option>
+            <option value="1">RESTAURER</option>
+            <option value="2">SERVIR</option>
+            <option value="3">GOLD</option>
+         </select>
+        </div>
+        <div class="i" >
+            <select formControlName="du">
+                <option value="">Durée</option>
+                <option value="2">7 jours</option>
+                <option value="0">6 mois</option>
+                <option value="1">1 ans</option>
+             </select>
+        </div>
+        <div class="bar"></div>
+        <div class="but">
+          <div class="b" (click)="modifier()"><span>Ajouter</span></div>
+        </div>
+       </div>
+        </div>
+      </div>

@@ -1,0 +1,279 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<head>
+    <title>Le meilleur site d'emploi pour l'hôtellerie et la restauration -- TIE JOB</title>
+    <meta name="description" content="la destination incontournable pour tous les passionnés de la restauration! Que vous soyez à la recherche de talents exceptionnels pour votre entreprise ou que vous aspiriez à une carrière excitante dans le domaine de l'hôtellerie">
+</head>
+<section class="section">
+    <div class="p1">
+<div>
+    <h2>
+              <span><p>L'avenir . . . </p></span>
+     
+       de l'hôtellerie et de la restauration
+    </h2>
+    <p class="pa1">
+       
+        Rejoignez-nous dès aujourd'hui, <br>  
+ faites un pas vers un avenir excitant dans le monde de l'hôtellerie et de la restauration
+    </p>
+    <p class="pa2">
+     Exemples de mots-clés:
+    </p>
+    <p class="pa3">
+    Directeur &nbsp; Chef &nbsp; Serveur &nbsp; Barman &nbsp;  Etc...
+    </p>
+
+    <div class="form">
+        <div class="f1">
+            <i class='bx bxs-graduation'></i>
+            <input type="text" placeholder="Spécialiste" disabled>
+        </div>
+        <div class="ba"></div>
+        <div class="f1">
+            <i class='bx bx-map'></i>
+            <input type="text" placeholder="Gouvernorat" disabled>
+        </div>
+        <div class="b" routerLink="/login">
+            <a >Rechercher</a>
+        </div>
+    </div>
+</div>
+    </div>
+    <div class="p2">
+        <img src="assets/nim.webp" alt="image_prpos">
+    </div>
+ 
+</section>
+<section class="sec">
+    <h2>À<span>
+         propos de nous</span></h2>
+<div class="l">
+    <div class="d1">
+        <p>
+         <span> TIE JOB</span>  est une plateforme dédiée à la recherche d'emploi 
+    dans le domaine de l'hôtellerie et de la restauration. Notre site web a été 
+    spécialement conçu pour simplifier le processus de 
+    recherche d'opportunités professionnelles dans ce secteur 
+    dynamique. Que vous soyez chef cuisinier, serveur, barman 
+    ou autre professionnel de la restauration, <br> <span>TIE JOB</span>  vous offre 
+    un accès facile à une multitude des offres d'emploi variées
+        </p>
+    </div>
+    <div class="d2">
+        <img src="assets/pr.webp" alt="image-princ">
+    </div>
+</div>
+</section>
+<section class="s3">
+    <div class="pp1">
+    <div>
+        <h2>
+            êtes-vous un employeur ?
+        </h2>
+        <p>
+            Notre devoir est de vous servir en vous fournissant tous les profils réquis
+        </p>
+        <div class="con" routerLink="/signuppatron">
+            <a href="#">Inscription 7 jours gratuit</a>
+        </div>
+    </div>
+    </div>
+    <div class="pp2">
+        <img src="assets/emr1.webp" alt="employee">
+    </div>
+</section>
+<section class="s3">
+    <div class="pp1">
+    <div>
+        <h2>
+            êtes-vous un employé ?
+        </h2>
+        <p>
+            Notre devoir est de vous fournir toutes les offres d'emplois disponibles de manière simple et fluide.
+        </p>
+        <div class="con" routerLink="/signup">
+            <a href="#" >Inscription gratuite</a>
+        </div>
+    </div>
+    </div>
+    <div class="pp2">
+        <img src="assets/sign.webp" alt="image_princ">
+    </div>
+</section>
+    <body>
+        <h2 class="h2">Explorer par <span>catégorie</span></h2>
+    <div class="body" >
+        <div class="wrapper" >
+          <ul class="carousel" #carousel>
+            <li class="card">
+                <div class="cadre">
+                    <!-- ... -->
+                    <div class="icon">
+                        <img src="assets/dir.png" alt="image_dircteur">
+                    </div>
+                    <h2>Directeur</h2>
+                    <div class="desc">
+                        <p>
+       {{this.reponse.Directeur}} utilisateurs disponibles &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      
+                        </p>
+                   
+                    </div>
+                </div>
+            </li>
+            <li class="card">
+                <div class="cadre">
+                    <!-- ... -->
+                    <div class="icon">
+                        <img src="assets/chef.png" alt="image_chef">
+                    </div>
+                    <h2>Chef</h2>
+                    <div class="desc">
+                        <p>
+            {{this.reponse.Chef}} utilisateurs disponibles &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      <i class="fa-solid fa-chevron-right"></i>
+                        </p>
+                   
+                    </div>
+                </div>
+            </li>
+            <li class="card">
+                <div class="cadre">
+                    <!-- ... -->
+                    <div class="icon">
+                        <img src="assets/barman.png" alt="image_barman">
+                    </div>
+                    <h2>Barman</h2>
+                    <div class="desc">
+                        <p>
+                            {{this.reponse.Barman}} utilisateurs disponibles &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      <i class="fa-solid fa-chevron-right"></i>
+                        </p>
+                   
+                    </div>
+                </div>
+            </li>
+            <li class="card">
+                <div class="cadre">
+                    <!-- ... -->
+                    <div class="icon">
+                        <img src="assets/bagage.png" alt="image_bagage">
+                    </div>
+                    <h2>Baggagiste</h2>
+                    <div class="desc">
+                        <p>
+                            {{this.reponse.Baggagiste}} utilisateurs disponibles &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      <i class="fa-solid fa-chevron-right"></i>
+                        </p>
+                   
+                    </div>
+                </div>
+            </li>
+            <li class="card">
+                <div class="cadre">
+                    <!-- ... -->
+                    <div class="icon">
+                        <img src="assets/serv.png" alt="image_servir">
+                    </div>
+                    <h2>Serveur</h2>
+                    <div class="desc">
+                        <p>
+                            {{this.reponse.Serveur}} utilisateurs disponibles &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      <i class="fa-solid fa-chevron-right"></i>
+                        </p>
+                   
+                    </div>
+                </div>
+            </li>
+            <li class="card">
+                <div class="cadre">
+                    <!-- ... -->
+                    <div class="icon">
+                        <img src="assets/portier.png" alt="image_portier">
+                    </div>
+                    <h2>Portier</h2>
+                    <div class="desc">
+                        <p>
+                            {{this.reponse.Portier}} utilisateurs disponibles &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      <i class="fa-solid fa-chevron-right"></i>
+                        </p>
+                   
+                    </div>
+                </div>
+            </li>
+            <li class="card">
+                <div class="cadre">
+                    <!-- ... -->
+                    <div class="icon">
+                        <img src="assets/dir.png" alt="image_dircteur">
+                    </div>
+                    <h2>Manager</h2>
+                    <div class="desc">
+                        <p>
+                            {{this.reponse.Manager}} utilisateurs disponibles &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      <i class="fa-solid fa-chevron-right"></i>
+                        </p>
+                   
+                    </div>
+                </div>
+            </li>
+            <li class="card">
+                <div class="cadre">
+                    <!-- ... -->
+                    <div class="icon">
+                        <img src="assets/chef.png" alt="image_chef">
+                    </div>
+                    <h2>Pizzaiolo</h2>
+                    <div class="desc">
+                        <p>
+                            {{this.reponse.Pizzaiolo}} utilisateurs disponibles &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      <i class="fa-solid fa-chevron-right"></i>
+                        </p>
+                   
+                    </div>
+                </div>
+            </li>
+  
+          </ul>
+       
+        </div>
+    </div>
+      </body>
+
+<section class="co" id="contact">
+    <h2>Cont <span>act</span></h2>
+    <div class="co2">
+ <div class="c1">
+    <div class="ca1">
+  <div class="v">
+    <p class="z">Entrer en contact</p>
+    <div class="f">
+        <i class='bx bxs-envelope'></i>
+        <p>tiejobtie@gmail.com</p>
+    </div>
+    <div class="f">
+        <i class='bx bxs-phone'></i>
+        <p>+216 26 799 477</p>
+    </div>
+  </div>
+    </div>
+    <div class="ca1">
+        <div class="v">
+          <p class="z">Adresse</p>
+          <div class="f">
+            <i class='bx bxs-map'></i>
+              <p>Tunis,ariana sidi thabet 2020</p>
+          </div>
+        
+        </div>
+          </div>
+        </div>
+        <div class="cn2">
+<div class="i1">
+    <input type="text" placeholder="Nom"> 
+</div>
+<div class="i1">
+    <input type="text" placeholder="Email">
+</div>
+<div class="i1">
+   <textarea  class="input" placeholder="Message" id="" cols="30" rows="10"></textarea>
+</div>
+   <div class="bt"><a href="#">Envoyer</a></div>
+        </div>
+    </div>
+</section>
