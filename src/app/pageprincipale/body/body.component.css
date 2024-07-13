@@ -574,8 +574,13 @@ h2 p{
 }
 @media screen and (max-width:600px) {
     body{
-        display: none;
+      
     }
+    .wrapper .carousel{
+       
+        grid-auto-columns: calc((100% / 1));
+     width: 100%;
+      }
     .section{
         width: 100%;
 margin-bottom: 0px;
