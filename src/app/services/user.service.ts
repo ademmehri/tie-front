@@ -11,6 +11,7 @@ import { Role } from '../models/Role.model';
 })
 export class UserService {
   private loggedin=false;
+  //private url="http://localhost:8080"
   private url="https://tie-job.com"
   constructor(private httpclt:HttpClient,private route:Router) {
 
