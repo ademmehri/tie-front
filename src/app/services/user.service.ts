@@ -9,10 +9,11 @@ import { Role } from '../models/Role.model';
 @Injectable({
   providedIn: 'root'
 })
+
 export class UserService {
   private loggedin=false;
   //private url="http://localhost:8080"
-  private url="https://tie-job.com:8080"
+  private url="https://www.tie-job.com:8080"
   constructor(private httpclt:HttpClient,private route:Router) {
 
    }
