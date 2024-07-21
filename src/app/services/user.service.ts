@@ -13,7 +13,7 @@ import { Role } from '../models/Role.model';
 export class UserService {
   private loggedin=false;
   //private url="http://localhost:8080"
-  private url="https://up-tie-back-6.onrender.com"
+  private url="https://www.tie-job.com:8443"
   constructor(private httpclt:HttpClient,private route:Router) {
 
    }

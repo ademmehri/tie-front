@@ -8,7 +8,7 @@ import { filee } from '../models/filee.model';
   providedIn: 'root'
 })
 export class FileService {
-  private url="https://up-tie-back-6.onrender.com"
+  private url="https://www.tie-job.com:8443"
   constructor(private httpclt:HttpClient,private route:Router) {
 
    }
