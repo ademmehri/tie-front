@@ -9,7 +9,7 @@ import { Offre } from '../models/listoffre.model';
 })
 export class OffreService {
 
-  private url="https://www.tie-job.com:8443"
+  private url="https://www.tie-job.com:8080"
 
   constructor(private httpclt:HttpClient,private route:Router) {}
   getItem(){
