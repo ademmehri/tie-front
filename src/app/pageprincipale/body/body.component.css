@@ -375,6 +375,7 @@ height: 100%;
     align-items: center;
     justify-content: center;
     border-radius: 20px;
+    cursor: pointer;
 }
 .bt a{
     text-decoration: none;
@@ -499,6 +500,7 @@ a{
   body .h2{
     padding-bottom: 30px;
     padding-left: 50px;
+   
   }
   .wrapper {
   
@@ -573,8 +575,8 @@ h2 p{
     to {width: 100%;}
 }
 @media screen and (max-width:600px) {
-    body{
-      
+    body .h2{
+        font-size: 25px;
     }
     .wrapper .carousel{
        

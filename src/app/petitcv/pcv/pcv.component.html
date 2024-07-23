@@ -22,7 +22,7 @@
 <p class="titre1">{{emp.nom}}</p>
             </div>
             <div class="cv" *ngIf="cv" >
-                <a href="assets/{{this.cv.titlefile}}" target="_blank" >Voir CV</a>
+                <a (click)="showcv()" >Voir CV</a>
              </div>
         </div>
         <div class="body">

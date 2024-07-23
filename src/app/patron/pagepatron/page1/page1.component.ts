@@ -82,12 +82,26 @@ p: string|number|undefined;
 
 constructor(private userserv:UserService,private router:ActivatedRoute,private fb:FormBuilder,private route:Router){
 
+  
 
-  this.formsignin=this.fb.group(
-    {
-   
-    }
-  )
+const userEmail = sessionStorage.getItem('email')!;
+if(userEmail!=undefined){
+this.userserv.getuserbyemail(userEmail).subscribe(
+ res=>{
+   this.empr=res
+   this.dur=this.empr.duree
+   if(this.dur=='set_jours'){
+    Swal.fire({
+      title: "Offre spéciale!",
+      color:"#2772D6",
+      text: "Cette offre est valable pendant 7 jours. Achetez maintenant!",
+      imageUrl: "assets/ez.webp",
+      imageWidth: 400,
+      imageHeight: 250,
+      imageAlt: "Custom image"
+    });
+   }
+  })}
 
 
 }
@@ -138,15 +152,7 @@ constructor(private userserv:UserService,private router:ActivatedRoute,private f
     this.dur=this.empr.duree
   
     if(this.dur=='set_jours'){
-      Swal.fire({
-        title: "Offre spéciale!",
-        color:"#2772D6",
-        text: "Cette offre est valable pendant 7 jours. Achetez maintenant!",
-        imageUrl: "assets/ez.webp",
-        imageWidth: 400,
-        imageHeight: 250,
-        imageAlt: "Custom image"
-      });
+   
       const dateActuelle: Date = new Date();
       const dateFinPack: Date = new Date(this.empr.d_inscrit);
       const d_p:number= 1;
@@ -283,6 +289,7 @@ totalItems!:number
        this.userserv. getemployeeGoldh().subscribe(
          res=>{
             this.employees=res
+            console.log(this.employees)
         this.employees= this.employees.filter(employee => {
           // Vérifie si l'employé a au moins un rôle avec le nom "USER"
           return employee.roles.some(role => role.role === 'USER');

@@ -110,7 +110,7 @@ border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 50%;
+    width: 90%;
 }
 .n p{
     font-weight: bold;
@@ -194,11 +194,7 @@ margin-top: 30px;
     align-items: center;
     justify-content: end;
 }
-.nom{
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 19px;
-}
+
 .d{
     display: flex;
  
@@ -361,6 +357,9 @@ justify-content: center;
   table tr .t {
     width: 170px;
   }
+  .nom a{
+    cursor: pointer;
+  }
   
 @media screen and (max-width:680px) {
     .profil{
@@ -419,6 +418,7 @@ justify-content: center;
 }
 .nom a{
     font-size: 14px;
+    
 }
 
 .dropdown-content{

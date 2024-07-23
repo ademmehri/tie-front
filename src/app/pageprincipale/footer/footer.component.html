@@ -10,8 +10,8 @@ Abonnez-vous à notre newsletter
             <input type="text" placeholder="
             Entrez votre adresse e-mail">
         </div>
-        <div class="bt">
-            <a href="#">S'abonner</a>
+        <div class="bt" (click)="nav()">
+            <a >S'abonner</a>
         </div>
       </div>
     </div>
@@ -20,26 +20,26 @@ Abonnez-vous à notre newsletter
             <img routerLink="/pageprincipale" src="assets/fot.webp" alt="logo_TIEJOB">
         </div>
         <div class="list1">
- <div class="a" routerLink="/pageprincipale">
-    <a href="#"  >Acceuil</a>
+ <div class="a" (click)="nav()">
+    <a >Acceuil</a>
  </div>
   <div class="a" routerLink="/propos">
-    <a href="#">À propos de nous</a> 
+    <a >À propos de nous</a> 
   </div>
     <div class="a" (click)="nav()">
-        <a href="#">Tarifs</a>
+        <a >Tarifs</a>
     </div>
 
         </div>
         <div class="list2">
         <div class="a" (click)=" scrollToContactIfOnHomePage()">
-            <a href="#">Contact</a> 
+            <a >Contact</a> 
         </div>
          <div class="a" routerLink="/login">
-            <a href="#"> Connexion</a> 
+            <a > Connexion</a> 
          </div>
           <div class="a"  (click)="nav()">
-            <a href="#">Inscription</a> 
+            <a >Inscription</a> 
           </div>
             
              </div>

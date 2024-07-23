@@ -79,7 +79,7 @@ export class UpdateComponent implements OnInit {
      if(this.emp.files!=undefined){
       this.filee=this.emp.files.find(file => file.nomfichier === 'image')!;
     if(this.filee!=undefined){
-      this.url='assets/'+this.filee.titlefile
+      this.url = 'data:' + this.filee.typefile + ';base64,' + this.filee.taillefile;
     }
      }
      
@@ -111,7 +111,7 @@ export class UpdateComponent implements OnInit {
      if(this.filee!=undefined){
 this.fileserv.updatefile(file.value,this.filee.idfile).subscribe(
   res=>{
-    this.url='assets/'+res.titlefile
+    this.url = 'data:' + res.typefile + ';base64,' + res.taillefile;
     Swal.fire({
       position: "top-end",
       icon: "success",
@@ -119,11 +119,13 @@ this.fileserv.updatefile(file.value,this.filee.idfile).subscribe(
       showConfirmButton: false,
       timer: 1500
     });
+    this.relod()
   }
 )
      }else{
       this.fileserv.addimage(file.value,this.emp.id).subscribe(
         res=>{
+          this.url = 'data:' + res.typefile + ';base64,' + res.taillefile;
           Swal.fire({
             position: "top-end",
             icon: "success",
@@ -131,6 +133,7 @@ this.fileserv.updatefile(file.value,this.filee.idfile).subscribe(
             showConfirmButton: false,
             timer: 1500
           });
+          this.relod()
         },(error) => {
           if (error.status === 403) {
             this.route.navigate(["/login"]);
@@ -218,7 +221,14 @@ this.fileserv.updatefile(file.value,this.filee.idfile).subscribe(
     return regex.test(chaine);
   }
  
- 
+  relod(){
+    
+    const currentUrl = this.route.url;
+
+    this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.route.navigate([currentUrl]);
+    });
+  }
 
 
 }

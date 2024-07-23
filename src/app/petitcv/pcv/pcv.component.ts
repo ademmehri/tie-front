@@ -57,7 +57,7 @@ result1!:string
           this.file=this.emp.files.find(file => file.nomfichier === 'image')!;
           this.cv=this.emp.files.find(file => file.nomfichier === 'cv')!;
         if(this.file!=undefined){
-          this.url='assets/'+this.file.titlefile
+          this.url = 'data:' + this.file.typefile + ';base64,' + this.file.taillefile;
         }
          }
       },(error) => {
@@ -99,6 +99,27 @@ result1!:string
   }
   annuler(){
     this.route.navigate(["profilemployee"]);
+  }
+  showcv(){
+    if (typeof this.cv.taillefile === 'string') {
+      // Supposons que img.image contient le contenu base64 du PDF
+      const base64PDF = this.cv.taillefile;
+  
+      // Convertir le base64 en un Blob
+      const binaryString = window.atob(base64PDF);
+      const len = binaryString.length;
+      const bytes = new Uint8Array(len);
+      for (let i = 0; i < len; i++) {
+          bytes[i] = binaryString.charCodeAt(i);
+      }
+      const blob = new Blob([bytes], { type: 'application/pdf' });
+  
+      // Créer une URL Blob
+      const url = URL.createObjectURL(blob);
+  
+      // Ouvrir cette URL dans un nouvel onglet
+      window.open(url, '_blank');
+  } 
   }
 
 }

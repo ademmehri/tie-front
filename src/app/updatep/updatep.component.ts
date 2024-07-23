@@ -69,7 +69,7 @@ bgov=""
         
         "num":["",Validators.required],
         "sp":["",[Validators.required]],
-        "exp":["",[Validators.required]],
+        "exp":[""],
         "gov":["",[Validators.required]],
         "city":["",[Validators.required]],
         "nom":["",[Validators.required]],
@@ -102,14 +102,18 @@ this.formsignin.controls['sp'].setValue(this.emp.specialite)
 this.formsignin.controls['exp'].setValue(this.emp.exp)
 this.formsignin.controls['gov'].setValue(this.emp.gouvernerat)
 this.formsignin.controls['city'].setValue(this.emp.city)
-this.formsignin.controls['a'].setValue(this.emp.date_nais.substring(0,4))
-this.formsignin.controls['m'].setValue(this.emp.date_nais.substring(5,7))
-this.formsignin.controls['j'].setValue(this.emp.date_nais.substring(8,10))
+const dateParts = this.emp.date_nais.split('-');
+const year = parseInt(dateParts[0], 10);
+const month = parseInt(dateParts[1], 10);
+const day = parseInt(dateParts[2], 10);
+this.formsignin.controls['a'].setValue(year)
+this.formsignin.controls['m'].setValue(month)
+this.formsignin.controls['j'].setValue(day)
     if(this.emp.files!=undefined){
      this.filee=this.emp.files.find(file => file.nomfichier === 'image')!;
      this.cv=this.emp.files.find(file => file.nomfichier === 'cv')!;
    if(this.filee!=undefined){
-     this.url='assets/'+this.filee.titlefile
+    this.url = 'data:' + this.filee.typefile + ';base64,' + this.filee.taillefile;
    }
     }
     
@@ -187,7 +191,8 @@ this.formsignin.controls['j'].setValue(this.emp.date_nais.substring(8,10))
     if(this.filee!=undefined){
 this.fileserv.updatefile(file.value,this.filee.idfile).subscribe(
  res=>{
-   this.url='assets/'+res.titlefile
+  this.url = 'data:' + res.typefile + ';base64,' + res.taillefile;
+  this.relod()
    Swal.fire({
      position: "top-end",
      icon: "success",
@@ -200,6 +205,7 @@ this.fileserv.updatefile(file.value,this.filee.idfile).subscribe(
     }else{
      this.fileserv.addimage(file.value,this.emp.id).subscribe(
        res=>{
+        this.relod()
          Swal.fire({
            position: "top-end",
            icon: "success",
@@ -223,14 +229,7 @@ this.fileserv.updatefile(file.value,this.filee.idfile).subscribe(
       this.reg=""
     
     }
-    if(this.formsignin.controls['exp'].errors?.['required']){
-      this.bexp="border: red 2px solid;"
-      this.exp="champ obligatoire"
-    }
-    else{
-      this.bexp="border: green 2px solid;"
-      this.exp=""
-    }
+   
  
     if(this.formsignin.controls['gov'].errors?.['required']){
       this.bgov="border: red 2px solid;"
@@ -293,6 +292,7 @@ this.fileserv.updatefile(file.value,this.filee.idfile).subscribe(
       this.emp.num=this.formsignin.controls['num'].value;
       this.emp.nom=this.formsignin.controls['nom'].value;
       this.emp.email=this.formsignin.controls['email'].value.trim();
+      console.log(this.emp)
   this.userserv.updateuser(this.emp).subscribe(
     res=>{
 if(this.cv!=undefined){
@@ -307,6 +307,7 @@ this.fileserv.updatefile(this.ncv,this.cv.idfile).subscribe(
       timer: 1500
     });
     this.route.navigate(["profilemployee"]);
+   // this.relod()
   }
 )
   }
@@ -362,6 +363,11 @@ this.fileserv.updatefile(this.ncv,this.cv.idfile).subscribe(
   annuler(){
     this.route.navigate(["profilemployee"]);
   }
-
+  relod(){
+    const currentUrl = this.route.url;
+    this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.route.navigate([currentUrl]);
+    });
+  }
 
 }

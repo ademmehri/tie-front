@@ -171,6 +171,7 @@ if(this.formsignin.valid && this.url!=""  && this.verifierNumero(this.formsignin
               showConfirmButton: false,
               timer: 1500
             });
+            this.route.navigate(['/login'])
            }
     
                  }

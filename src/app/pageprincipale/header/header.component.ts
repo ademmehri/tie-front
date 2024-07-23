@@ -30,7 +30,7 @@ this.userserv.getuserbyemail(userEmail).subscribe(
  if(this.user_connect.files!=undefined){
   this.file=this.user_connect.files.find(file => file.nomfichier === 'image')!;
 if(this.file!=undefined){
-  this.url='assets/'+this.file.titlefile
+  this.url = 'data:' + this.file.typefile + ';base64,' + this.file.taillefile;
 }
  }
  

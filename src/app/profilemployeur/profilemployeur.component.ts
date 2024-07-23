@@ -25,8 +25,10 @@ bcolor=""
        this.emp=res
     if(this.emp.files!=undefined){
      this.file=this.emp.files.find(file => file.nomfichier === 'image')!;
+    
    if(this.file!=undefined){
-     this.url='assets/'+this.file.titlefile
+    this.url = 'data:' + this.file.typefile + ';base64,' + this.file.taillefile;
+   
    }
     }
     

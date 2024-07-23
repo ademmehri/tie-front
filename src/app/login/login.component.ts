@@ -79,6 +79,7 @@ this.bgcol="border: red 2px solid;"
                 res=>{
                
                   this.use=res
+                  console.log(this.use)
                   this.userserv.save( authToken,us.email,this.use.roles[0].role)
                   if(this.use.roles[0].role=='ENTR'){
                     if(localStorage.getItem('redirectUrl')!=undefined){

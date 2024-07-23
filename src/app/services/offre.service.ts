@@ -10,7 +10,7 @@ import { Offre } from '../models/listoffre.model';
 export class OffreService {
 
   private url="https://www.tie-job.com:8080/api"
-
+//private url="http://localhost:8080"
   constructor(private httpclt:HttpClient,private route:Router) {}
   getItem(){
     return sessionStorage.getItem("jwt");
