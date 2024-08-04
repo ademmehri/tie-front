@@ -47,7 +47,7 @@ aff=false
           
           if(this.emp.fls!=undefined){
             if(this.emp.fls['image']!=undefined){
-             this.url = '/var/www/html/uploads/'+this.emp.fls['image'];
+             this.url = 'uploads/'+this.emp.fls['image'];
             }
             if(this.emp.fls['cv']!=undefined){
              this.aff=true

@@ -29,7 +29,7 @@ this.userserv.getuserbyemail(userEmail).subscribe(
     this.role=this.user_connect.roles[0].role
     if(this.user_connect.fls!=undefined){
       if(this.user_connect.fls['image']!=undefined){
-       this.url = '/var/www/html/uploads/'+this.user_connect.fls['image'];
+       this.url = 'uploads/'+this.user_connect.fls['image'];
       }
        }
  

@@ -78,7 +78,7 @@ export class UpdateComponent implements OnInit {
         this.formsignin.controls['sp'].setValue(this.emp.specialite)
         if(this.emp.fls!=undefined){
           if(this.emp.fls['image']!=undefined){
-           this.url = '/var/www/html/uploads/'+this.emp.fls['image'];
+           this.url = 'uploads/'+this.emp.fls['image'];
           }
            }
      

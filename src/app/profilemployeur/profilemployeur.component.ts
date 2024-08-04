@@ -25,7 +25,7 @@ bcolor=""
        this.emp=res
     if(this.emp.fls!=undefined){
    if(this.emp.fls['image']!=undefined){
-    this.url = '/var/www/html/uploads/'+this.emp.fls['image'];
+    this.url = 'uploads/'+this.emp.fls['image'];
    }
     }
     
