@@ -6,6 +6,7 @@ import { employee } from '../models/employee.model';
 import { UserService } from '../services/user.service';
 import Swal from 'sweetalert2';
 import { FileService } from '../services/file.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-updatep',
@@ -84,49 +85,57 @@ bgov=""
     )
    
   }
-  ngOnInit(): void {
+  async ngOnInit() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
     const userEmail = sessionStorage.getItem('email')!;
-    if(userEmail!=undefined){
-   this.userserv.getuserbyemail(userEmail).subscribe(
-     res=>{
-       this.emp=res
-       this.formsignin.controls['num'].setValue(this.emp.num)
-this.formsignin.controls['nom'].setValue(this.emp.nom)
-this.formsignin.controls['email'].setValue(this.emp.email)
-
-this.formsignin.controls['rad'].setValue(this.emp.sexe)
-this.formsignin.controls['rad2'].setValue(this.emp.etat)
-this.formsignin.controls['sp'].setValue(this.emp.specialite)
-this.formsignin.controls['exp'].setValue(this.emp.exp)
-this.formsignin.controls['gov'].setValue(this.emp.gouvernerat)
-this.formsignin.controls['city'].setValue(this.emp.city)
-const dateParts = this.emp.date_nais.split('-');
-const year = parseInt(dateParts[0], 10);
-const month = parseInt(dateParts[1], 10);
-const day = parseInt(dateParts[2], 10);
-this.formsignin.controls['a'].setValue(year)
-this.formsignin.controls['m'].setValue(month)
-this.formsignin.controls['j'].setValue(day)
-    if(this.emp.files!=undefined){
-     this.filee=this.emp.files.find(file => file.nomfichier === 'image')!;
-     this.cv=this.emp.files.find(file => file.nomfichier === 'cv')!;
-   if(this.filee!=undefined){
-    this.url = 'data:' + this.filee.typefile + ';base64,' + this.filee.taillefile;
-   }
-    }
     
-   
-     }
-   )
+    if (userEmail) {
+      try {
+        const emp = await this.userserv.getuserbyemail(userEmail).toPromise();
+        
+        if (emp) {  // Vérification que emp n'est pas undefined
+          this.emp = emp;
+          
+          this.formsignin.controls['num'].setValue(this.emp.num);
+          this.formsignin.controls['nom'].setValue(this.emp.nom);
+          this.formsignin.controls['email'].setValue(this.emp.email);
+          this.formsignin.controls['rad'].setValue(this.emp.sexe);
+          this.formsignin.controls['rad2'].setValue(this.emp.etat);
+          this.formsignin.controls['sp'].setValue(this.emp.specialite);
+          this.formsignin.controls['exp'].setValue(this.emp.exp);
+          this.formsignin.controls['gov'].setValue(this.emp.gouvernerat);
+          this.formsignin.controls['city'].setValue(this.emp.city);
+  
+          const dateParts = this.emp.date_nais.split('-');
+          const year = parseInt(dateParts[0], 10);
+          const month = parseInt(dateParts[1], 10);
+          const day = parseInt(dateParts[2], 10);
+          this.formsignin.controls['a'].setValue(year);
+          this.formsignin.controls['m'].setValue(month);
+          this.formsignin.controls['j'].setValue(day);
+  
+          if (this.emp.files) {
+            this.filee = this.emp.files.find(file => file.nomfichier === 'image')!;
+            this.cv = this.emp.files.find(file => file.nomfichier === 'cv')!;
+            if (this.filee) {
+              this.url = 'data:' + this.filee.typefile + ';base64,' + this.filee.taillefile;
+            }
+          }
+        } else {
+          this.route.navigate(["/login"]);
+        }
+      } catch (error) {
+        if (error instanceof HttpErrorResponse && error.status === 403) {
+          this.route.navigate(["/login"]);
+        } else {
+          this.route.navigate(["/login"]);
+        }
+      }
     }
-
-
-
- 
-   
   }
+  
+  
 
   onselectfile(e: any){
     if(e.target.files){
@@ -181,185 +190,193 @@ this.formsignin.controls['j'].setValue(day)
       this.formsignin.controls['sp'].setValue(e)
     }
   
-    selctimg(){
-      Swal.fire({
+    async selectimg() {
+      const { value: file } = await Swal.fire({
         title: 'Modifier votre image',
         input: 'file',
-      
-      }).then(
-        file=>{
-    if(this.filee!=undefined){
-this.fileserv.updatefile(file.value,this.filee.idfile).subscribe(
- res=>{
-  this.url = 'data:' + res.typefile + ';base64,' + res.taillefile;
-  this.relod()
-   Swal.fire({
-     position: "top-end",
-     icon: "success",
-     title: "Image modifié",
-     showConfirmButton: false,
-     timer: 1500
-   });
- }
-)
-    }else{
-     this.fileserv.addimage(file.value,this.emp.id).subscribe(
-       res=>{
-        this.relod()
-         Swal.fire({
-           position: "top-end",
-           icon: "success",
-           title: "Image ajouté",
-           showConfirmButton: false,
-           timer: 1500
-         });
-       }
-     )
-    }
-        }
-      )
-  }
-  modifier(){
-    if(this.formsignin.controls['city'].errors?.['required']){
-      this.breg="border: red 2px solid;"
-      this.reg="champ obligatoire"
-    }
-    else{
-      this.breg="border: green 2px solid;"
-      this.reg=""
+      });
     
-    }
-   
- 
-    if(this.formsignin.controls['gov'].errors?.['required']){
-      this.bgov="border: red 2px solid;"
-      this.gov="champ obligatoire"
-    }
-    else{
-      this.bgov="border: green 2px solid;"
-      this.gov=""
-    }
-    if(this.formsignin.controls['sp'].errors?.['required']){
-      this.bsp="border: red 2px solid;"
-      this.sp="champ obligatoire"
-    }
-    else{
-      this.bsp="border: green 2px solid;"
-      this.sp=""
-    }
-    if(this.formsignin.controls['email'].errors?.['required']){
-      this.bemail="border: red 2px solid;"
-      this.sp="champ obligatoire"
-    }
-    else{
-      this.bemail="border: green 2px solid;"
-      this.sp=""
-    }
-    if(this.formsignin.controls['nom'].errors?.['required']){
-      this.bnpm="border: red 2px solid;"
-      this.sp="champ obligatoire"
-    }
-    else{
-      this.bnpm="border: green 2px solid;"
-      this.sp=""
-    }
-    if(this.formsignin.controls['num'].errors?.['required']){
-      this.bnumero="border: red 2px solid;"
-      this.sp="champ obligatoire"
-    }
-    else{
-      this.bnumero="border: green 2px solid;"
-      this.sp=""
-    }
-    if(this.formsignin.controls['j'].invalid || this.formsignin.controls['m'].invalid || this.formsignin.controls['a'].invalid){
-      this.bdate="border: red 2px solid;"
-      this.date="champ obligatoire"
-    }
-    else{
-      this.bdate="border: green 2px solid;"
-      this.date=""
-    }
- 
-    if(this.formsignin.valid){
-  
-      this.emp.city= this.formsignin.controls['city'].value;
-      this.emp.sexe=this.formsignin.controls['rad'].value;
-      this.emp.exp=this.formsignin.controls['exp'].value;
-      this.emp.specialite=this.formsignin.controls['sp'].value;
-      this.emp.gouvernerat=this.formsignin.controls['gov'].value;
-      this.emp.date_nais=this.formsignin.controls['a'].value+'-'+this.formsignin.controls['m'].value+'-'+this.formsignin.controls['j'].value
-      this.emp.etat=this.formsignin.controls['rad2'].value;
-      this.emp.num=this.formsignin.controls['num'].value;
-      this.emp.nom=this.formsignin.controls['nom'].value;
-      this.emp.email=this.formsignin.controls['email'].value.trim();
-      console.log(this.emp)
-  this.userserv.updateuser(this.emp).subscribe(
-    res=>{
-if(this.cv!=undefined){
-  if(this.ncv!=undefined){
-this.fileserv.updatefile(this.ncv,this.cv.idfile).subscribe(
-  res=>{
-    Swal.fire({
-      position: "top-end",
-      icon: "success",
-      title: "Candidat Modifié",
-      showConfirmButton: false,
-      timer: 1500
-    });
-    this.route.navigate(["profilemployee"]);
-   // this.relod()
-  }
-)
-  }
-  else{
-    Swal.fire({
-      position: "top-end",
-      icon: "success",
-      title: "Candidat Modifié",
-      showConfirmButton: false,
-      timer: 1500
-    });
-    this.route.navigate(["profilemployee"]);
-  }
-}else{
-  if(this.ncv!=undefined){
-    this.fileserv.addcv(this.ncv,this.emp.id).subscribe(
-      res=>{
+      if (file) {
+        const maxSize = 2 * 1024 * 1024; // 2 Mo
+        if (file.size > maxSize) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'La taille de l\'image ne doit pas dépasser 2 Mo.',
+          });
+          return;
+        }
+    
+        try {
+          if (this.filee != undefined) {
+            const updatedFile = await this.fileserv.updatefile(file, this.filee.idfile).toPromise();
+            this.url = 'data:' + updatedFile!.typefile + ';base64,' + updatedFile!.taillefile;
+            this.relod();
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Image modifiée",
+              showConfirmButton: false,
+              timer: 1500
+            });
+          } else {
+            const addedFile = await this.fileserv.addimage(file, this.emp.id).toPromise();
+            this.relod();
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Image ajoutée",
+              showConfirmButton: false,
+              timer: 1500
+            });
+          }
+        } catch (error) {
+          console.error('Error uploading file:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+          });
+        }
+      } else {
         Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Candidat Modifié",
-          showConfirmButton: false,
-          timer: 1500
+          icon: 'info',
+          title: 'No file selected',
+          text: 'Please select a file to upload.',
         });
-        this.route.navigate(["profilemployee"]);
-      },(error) => {
-        if (error.status === 403) {
-          this.route.navigate(["login"]);
+      }
+    }
+    
+    
+    async modifier() {
+      try {
+        // Validation des champs du formulaire
+        if (this.formsignin.controls['city'].errors?.['required']) {
+          this.breg = "border: red 2px solid;";
+          this.reg = "champ obligatoire";
+        } else {
+          this.breg = "border: green 2px solid;";
+          this.reg = "";
+        }
+    
+        if (this.formsignin.controls['gov'].errors?.['required']) {
+          this.bgov = "border: red 2px solid;";
+          this.gov = "champ obligatoire";
+        } else {
+          this.bgov = "border: green 2px solid;";
+          this.gov = "";
+        }
+    
+        if (this.formsignin.controls['sp'].errors?.['required']) {
+          this.bsp = "border: red 2px solid;";
+          this.sp = "champ obligatoire";
+        } else {
+          this.bsp = "border: green 2px solid;";
+          this.sp = "";
+        }
+    
+        if (this.formsignin.controls['email'].errors?.['required']) {
+          this.bemail = "border: red 2px solid;";
+          this.sp = "champ obligatoire";
+        } else {
+          this.bemail = "border: green 2px solid;";
+          this.sp = "";
+        }
+    
+        if (this.formsignin.controls['nom'].errors?.['required']) {
+          this.bnpm = "border: red 2px solid;";
+          this.sp = "champ obligatoire";
+        } else {
+          this.bnpm = "border: green 2px solid;";
+          this.sp = "";
+        }
+    
+        if (this.formsignin.controls['num'].errors?.['required']) {
+          this.bnumero = "border: red 2px solid;";
+          this.sp = "champ obligatoire";
+        } else {
+          this.bnumero = "border: green 2px solid;";
+          this.sp = "";
+        }
+    
+        if (this.formsignin.controls['j'].invalid || this.formsignin.controls['m'].invalid || this.formsignin.controls['a'].invalid) {
+          this.bdate = "border: red 2px solid;";
+          this.date = "champ obligatoire";
+        } else {
+          this.bdate = "border: green 2px solid;";
+          this.date = "";
+        }
+    
+        // Si le formulaire est valide
+        if (this.formsignin.valid) {
+          // Mise à jour des propriétés de l'objet `emp`
+          this.emp.city = this.formsignin.controls['city'].value;
+          this.emp.sexe = this.formsignin.controls['rad'].value;
+          this.emp.exp = this.formsignin.controls['exp'].value;
+          this.emp.specialite = this.formsignin.controls['sp'].value;
+          this.emp.gouvernerat = this.formsignin.controls['gov'].value;
+          this.emp.date_nais = `${this.formsignin.controls['a'].value}-${this.formsignin.controls['m'].value}-${this.formsignin.controls['j'].value}`;
+          this.emp.etat = this.formsignin.controls['rad2'].value;
+          this.emp.num = this.formsignin.controls['num'].value;
+          this.emp.nom = this.formsignin.controls['nom'].value;
+          this.emp.email = this.formsignin.controls['email'].value.trim();
+          console.log(this.emp);
+    
+          // Appel au service pour mettre à jour l'utilisateur
+          await this.userserv.updateuser(this.emp).toPromise();
+    
+          if (this.cv != undefined) {
+            if (this.ncv != undefined) {
+              // Mise à jour du CV
+              await this.fileserv.updatefile(this.ncv, this.cv.idfile).toPromise();
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Candidat Modifié",
+                showConfirmButton: false,
+                timer: 1500
+              });
+            } else {
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Candidat Modifié",
+                showConfirmButton: false,
+                timer: 1500
+              });
+            }
+          } else {
+            if (this.ncv != undefined) {
+              // Ajout du CV
+              await this.fileserv.addcv(this.ncv, this.emp.id).toPromise();
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Candidat Modifié",
+                showConfirmButton: false,
+                timer: 1500
+              });
+            } else {
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Candidat Modifié",
+                showConfirmButton: false,
+                timer: 1500
+              });
+            }
+          }
+          this.route.navigate(["profilemployee"]);
+        }
+      } catch (error) {
+        if (error instanceof HttpErrorResponse && error.status === 403) {
+          this.route.navigate(["/login"]);
+        } else {
+          this.route.navigate(["/login"]);
         }
       }
-    )
-  }
-  else{
-    Swal.fire({
-      position: "top-end",
-      icon: "success",
-      title: "Candidat Modifié",
-      showConfirmButton: false,
-      timer: 1500
-    });
-    this.route.navigate(["profilemployee"]);
-  }
-}
-   
-    },(error) => {
-      if (error.status === 403) {
-        this.route.navigate(["/login"]);
-      }
     }
-  )
- }           
-}
+    
   annuler(){
     this.route.navigate(["profilemployee"]);
   }

@@ -63,6 +63,10 @@ result!:employee
   j=0
   m=0
   a=0
+  wordCount: number = 0;
+  maxLength: number = 10;
+  wordsRemaining: number = 83;
+  maxWords: number = 83;
   constructor(private fb:FormBuilder,private route:Router,private userserv:UserService,private fileserv:FileService,private router:ActivatedRoute){
     this.maxDate = new Date();
     this.formsignin=this.fb.group(
@@ -70,7 +74,7 @@ result!:employee
         "j":["",Validators.required],
         "m":["",Validators.required],
         "a":["",Validators.required],
-        "exp":["",[]],
+        "exp":["",[this.wordCountValidator.bind(this)]],
         "rad1":["",Validators.required],
         "rad2":["",Validators.required],
         "region":["",[Validators.required]],
@@ -79,6 +83,27 @@ result!:employee
         
       }
     )
+
+    this.formsignin.get('exp')?.valueChanges.subscribe(value => {
+      this.wordCount = this.countWords(value);
+      this.wordsRemaining = this.maxWords - this.wordCount;
+    });
+  
+  }
+  countWords(text: string): number {
+    if (!text) {
+      return 0;
+    }
+
+    return text.trim().split(/\s+/).length;
+  }
+
+  wordCountValidator(control: any) {
+    const text = control.value;
+    if (text && text.length > this.maxLength) {
+      return { 'maxLengthExceeded': true };
+    }
+    return null;
   }
   ngOnInit(): void {
     document.body.scrollTop = 0;
@@ -87,191 +112,202 @@ result!:employee
 
   }
 
-  onsubmit(){
- 
-    if(this.formsignin.controls['region'].errors?.['required']){
-      this.breg="border: red 2px solid;"
-      this.reg="champ obligatoire"
+  async onsubmit() {
+    // Validation des champs
+    if (this.formsignin.controls['region'].errors?.['required']) {
+      this.breg = "border: red 2px solid;";
+      this.reg = "champ obligatoire";
+    } else {
+      this.breg = "border: green 2px solid;";
+      this.reg = "";
     }
-    else{
-      this.breg="border: green 2px solid;"
-      this.reg=""
-    
-    }
-   
-    if(this.formsignin.controls['j'].invalid || this.formsignin.controls['m'].invalid || this.formsignin.controls['a'].invalid){
-      this.bdate="border: red 2px solid;"
-      this.date="champ obligatoire"
-    }
-    else{
-      this.bdate="border: green 2px solid;"
-      this.date=""
-    }
-    if(this.url==""){
-      this.timg="Choisie une image"
-    }
-    else{
-      this.timg="";
-    }
-    if(this.formsignin.controls['gov'].errors?.['required']){
-      this.bgov="border: red 2px solid;"
-      this.gov="champ obligatoire"
-    }
-    else{
-      this.bgov="border: green 2px solid;"
-      this.gov=""
-    }
-    if(this.formsignin.controls['sp'].errors?.['required']){
-      this.bsp="border: red 2px solid;"
-      this.sp="champ obligatoire"
-    }
-   else if(!this.spe.includes(this.formsignin.controls['sp'].value)){
-      this.sp="Sélectionnez votre spécialité"
-      this.bsp="border: red 2px solid;"
-    }
-    else{
-      this.bsp="border: green 2px solid;"
-      this.sp=""
-    }
-    if(this.formsignin.controls['rad1'].errors?.['required']){
-      this.bsexe="border: red 2px solid;"
-      this.sexe="champ obligatoire"
-    }
-    else{
-      this.bsexe="border: green 2px solid;"
-      this.sexe=""
-    }
-    if(this.formsignin.controls['rad2'].errors?.['required']){
-      this.betat="border: red 2px solid;"
-      this.etat="champ obligatoire"
-    }
-    else{
-      this.betat="border: green 2px solid;"
-      this.etat=""
-    }
-    if(this.formsignin.valid){
-   
   
-      this.empl.city= this.formsignin.controls['region'].value
-      this.empl.sexe=this.formsignin.controls['rad1'].value;
-      this.empl.exp=this.formsignin.controls['exp'].value;
-      this.empl.specialite=this.formsignin.controls['sp'].value;
-      this.empl.gouvernerat=this.formsignin.controls['gov'].value;
-      this.empl.date_nais=this.formsignin.controls['a'].value+'-'+this.formsignin.controls['m'].value+'-'+this.formsignin.controls['j'].value
-      this.empl.etat=this.formsignin.controls['rad2'].value;
+    if (this.formsignin.controls['j'].invalid || this.formsignin.controls['m'].invalid || this.formsignin.controls['a'].invalid) {
+      this.bdate = "border: red 2px solid;";
+      this.date = "champ obligatoire";
+    } else {
+      this.bdate = "border: green 2px solid;";
+      this.date = "";
+    }
   
-  this.userserv.existmail(this.empl.email).subscribe(
-    res=>{
-     
-      if(res==false){
-        this.userserv.verificationemail(this.empl.email).subscribe(
-          res=>{
-            this.response=res
-       this.token= this.response.token
-    
-       Swal.fire("Code Veification envoi par email");
-       Swal.fire({
-         title: 'Code de verification envoi par email',
-         input: 'number'
-       }).then(
-         number=>{
-       
-               if(this.token==number.value){
-               this.userserv.addemployee(this.empl).subscribe(
-                 res=>{
-                  if(this.file!=undefined){
-                   this.fileserv.addimage(this.file,res.id).subscribe(
-                    res=>{
-                      Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "Candidat enregistré",
-                        showConfirmButton: false,
-                        timer: 1500
-                      });
-                      this.route.navigate(["login"]);
-                    }
-                   )
-                  }
-                  if(this.cv!=undefined){
-                    this.fileserv.addcv(this.cv,res.id).subscribe(
-                      res=>{
-                        Swal.fire({
-                          position: "top-end",
-                          icon: "success",
-                          title: "Candidat enregistré",
-                          showConfirmButton: false,
-                          timer: 1500
-                        });
-                        this.route.navigate(["login"]);
-                      }
-                    )
-                  }
-                  if(this.cv==undefined && this.file==undefined ){
-                    Swal.fire({
-                      position: "top-end",
-                      icon: "success",
-                      title: "Candidat enregistré",
-                      showConfirmButton: false,
-                      timer: 1500
-                    });
-                    this.route.navigate(["login"]);
-                  }
-              
-                 }
-                 
-               )
-        
-               }
-               else{
-                 Swal.fire({
-                   icon: 'error',
-                   title: 'Oops...',
-                   text: 'COde incorecte',
-                
-                 })
-               }
-             
-         
-         }
-       )
+    if (this.url == "") {
+      this.timg = "Choisie une image";
+    } else {
+      this.timg = "";
+    }
+  
+    if (this.formsignin.controls['gov'].errors?.['required']) {
+      this.bgov = "border: red 2px solid;";
+      this.gov = "champ obligatoire";
+    } else {
+      this.bgov = "border: green 2px solid;";
+      this.gov = "";
+    }
+  
+    if (this.formsignin.controls['sp'].errors?.['required']) {
+      this.bsp = "border: red 2px solid;";
+      this.sp = "champ obligatoire";
+    } else if (!this.spe.includes(this.formsignin.controls['sp'].value)) {
+      this.sp = "Sélectionnez votre spécialité";
+      this.bsp = "border: red 2px solid;";
+    } else {
+      this.bsp = "border: green 2px solid;";
+      this.sp = "";
+    }
+  
+    if (this.formsignin.controls['rad1'].errors?.['required']) {
+      this.bsexe = "border: red 2px solid;";
+      this.sexe = "champ obligatoire";
+    } else {
+      this.bsexe = "border: green 2px solid;";
+      this.sexe = "";
+    }
+  
+    if (this.formsignin.controls['rad2'].errors?.['required']) {
+      this.betat = "border: red 2px solid;";
+      this.etat = "champ obligatoire";
+    } else {
+      this.betat = "border: green 2px solid;";
+      this.etat = "";
+    }
+  
+    if (this.formsignin.valid) {
+      this.empl.city = this.formsignin.controls['region'].value;
+      this.empl.sexe = this.formsignin.controls['rad1'].value;
+      this.empl.exp = this.formsignin.controls['exp'].value;
+      this.empl.specialite = this.formsignin.controls['sp'].value;
+      this.empl.gouvernerat = this.formsignin.controls['gov'].value;
+      this.empl.date_nais = this.formsignin.controls['a'].value + '-' + this.formsignin.controls['m'].value + '-' + this.formsignin.controls['j'].value;
+      this.empl.etat = this.formsignin.controls['rad2'].value;
+  
+      try {
+        const emailExists = await this.userserv.existmail(this.empl.email).toPromise();
+        if (!emailExists) {
+          const verificationResponse = await this.userserv.verificationemail(this.empl.email).toPromise();
+          this.response = verificationResponse;
+          this.token = this.response.token;
+  
+          const { value: number } = await Swal.fire({
+            title: 'Code de verification envoi par email',
+            input: 'number',
+            showCancelButton: true,
+          });
+  
+          if (this.token == number) {
+            const addEmployeeResponse = await this.userserv.addemployee(this.empl).toPromise();
+            if (this.file !== undefined) {
+              await this.userserv.addfile(this.file, addEmployeeResponse!.id,"image").toPromise();
+            }
+  
+            if (this.cv !== undefined) {
+              await this.userserv.addfile(this.cv, addEmployeeResponse!.id,'cv').toPromise();
+            }
+  
+            if (this.cv == undefined && this.file == undefined) {
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Candidat enregistré",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              this.route.navigate(["login"]);
+            }else{
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Candidat enregistré",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              this.route.navigate(["login"]);
+            }
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Code incorrect',
+            });
           }
-         ) 
-      }
-      else{
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Personne existe',
+          });
+        }
+      } catch (error) {
+        console.error(error);
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'Persone existe',
-       
-        })
+          text: 'Une erreur est survenue',
+        });
       }
     }
-   )
- }
   }
-  onselectfile(e: any){
-    if(e.target.files){
-      var reader=new FileReader();
-      
-      reader.readAsDataURL(e.target.files[0]);
-      this.file=e.target.files[0];
-     
-      reader.onload=(event:any)=>{
-        this.url=event.target.result;
-      }
-    }
   
-  }
-  onselectcv(e: any){
-    if(e.target.files){
-      var reader=new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
-      this.cv=e.target.files[0];
-     
+  onselectfile(e: any) {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      const maxSize = 2 * 1024 * 1024; // 2 Mo en octets
+  
+     /* if (file.size > maxSize) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'L\'image ne doit pas dépasser 2 Mo',
+        });
+        return;
+      }*/
+  
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+      this.file = file;
+      reader.onload = (event: any) => {
+        this.url = event.target.result;
+      };
     }
   }
-
+  
+  onselectcv(e: any) {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      const maxSize = 1.2 * 1024 * 1024; // 1.2 Mo en octets
+  
+      // Vérification du type de fichier
+      if (file.type !== 'application/pdf') {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Le fichier doit être au format PDF',
+        }).then(() => {
+          // Réinitialiser l'input après l'affichage du message
+          e.target.value = '';
+        });
+        return;
+      }
+  
+      // Vérification de la taille du fichier
+      if (file.size > maxSize) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Le fichier PDF ne doit pas dépasser 1,2 Mo',
+        }).then(() => {
+          // Réinitialiser l'input après l'affichage du message
+          e.target.value = '';
+        });
+        return;
+      }
+  
+  
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+      this.cv = file;
+    }
+  }
+  
   onselecte(e:any){
     this.d=e.target.value;
   }

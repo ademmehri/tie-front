@@ -23,12 +23,9 @@ bcolor=""
    this.userserv.getuserbyemail(userEmail).subscribe(
      res=>{
        this.emp=res
-    if(this.emp.files!=undefined){
-     this.file=this.emp.files.find(file => file.nomfichier === 'image')!;
-    
-   if(this.file!=undefined){
-    this.url = 'data:' + this.file.typefile + ';base64,' + this.file.taillefile;
-   
+    if(this.emp.fls!=undefined){
+   if(this.emp.fls['image']!=undefined){
+    this.url = '/var/www/html/uploads/'+this.emp.fls['image'];
    }
     }
     

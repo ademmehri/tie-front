@@ -76,12 +76,11 @@ export class UpdateComponent implements OnInit {
         this.formsignin.controls['gov'].setValue(this.emp.gouvernerat)
         this.formsignin.controls['num'].setValue(this.emp.num)
         this.formsignin.controls['sp'].setValue(this.emp.specialite)
-     if(this.emp.files!=undefined){
-      this.filee=this.emp.files.find(file => file.nomfichier === 'image')!;
-    if(this.filee!=undefined){
-      this.url = 'data:' + this.filee.typefile + ';base64,' + this.filee.taillefile;
-    }
-     }
+        if(this.emp.fls!=undefined){
+          if(this.emp.fls['image']!=undefined){
+           this.url = '/var/www/html/uploads/'+this.emp.fls['image'];
+          }
+           }
      
     
       },(error) => {
@@ -108,10 +107,11 @@ export class UpdateComponent implements OnInit {
        
        }).then(
          file=>{
-     if(this.filee!=undefined){
-this.fileserv.updatefile(file.value,this.filee.idfile).subscribe(
+     if(this.emp.fls['image']!=undefined){
+
+this.userserv.updatefile(file.value,this.emp.id,'image').subscribe(
   res=>{
-    this.url = 'data:' + res.typefile + ';base64,' + res.taillefile;
+
     Swal.fire({
       position: "top-end",
       icon: "success",
@@ -123,9 +123,9 @@ this.fileserv.updatefile(file.value,this.filee.idfile).subscribe(
   }
 )
      }else{
-      this.fileserv.addimage(file.value,this.emp.id).subscribe(
+      this.userserv.addfile(file.value,this.emp.id,'image').subscribe(
         res=>{
-          this.url = 'data:' + res.typefile + ';base64,' + res.taillefile;
+      
           Swal.fire({
             position: "top-end",
             icon: "success",

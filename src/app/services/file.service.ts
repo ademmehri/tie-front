@@ -9,14 +9,14 @@ import { filee } from '../models/filee.model';
 })
 export class FileService {
   private url="https://www.tie-job.com:8080/api"
-  //private url="http://localhost:8080"
+ // private url="http://localhost:8080"
   constructor(private httpclt:HttpClient,private route:Router) {
 
    }
    addimage(file:File,id:bigint):Observable<filee>{
     const formData = new FormData();
     formData.append('file', file);
-    return this.httpclt.post<filee>(this.url+"/auth/addimage/"+id,formData);
+    return this.httpclt.post<filee>(this.url+"/auth/addfile/"+id,formData);
    }
    addcv(file:File,id:bigint):Observable<filee>{
     const formData = new FormData();

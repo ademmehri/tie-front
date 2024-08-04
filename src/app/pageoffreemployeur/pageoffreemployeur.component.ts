@@ -22,28 +22,36 @@ export class PageoffreemployeurComponent implements OnInit {
   idoff!:bigint
   off!:Offre
   constructor(private router:ActivatedRoute,private userservice:UserService,private offreserv:OffreService,private route:Router){
-  this.idoff=JSON.parse(sessionStorage.getItem('idoffre')!)
-  this.offreserv.getoffre(this.idoff).subscribe(
-    res=>{
-this.off=res
-if(this.off.employeur.files!=undefined){
-  this.file=this.off.employeur.files.find(file => file.nomfichier === 'image')!;
-if(this.file!=undefined){
-  this.url='assets/'+this.file.titlefile
-}
- }
-    },(error) => {
+  
+  }
+  async ngOnInit() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    try {
+      this.idoff = JSON.parse(sessionStorage.getItem('idoffre')!);
+  
+      const offre = await this.offreserv.getoffre(this.idoff).toPromise();
+  
+      if (offre) {
+        this.off = offre;
+  
+        if (this.off.employeur.files != undefined) {
+          this.file = this.off.employeur.files.find(file => file.nomfichier === 'image')!;
+          if (this.file != undefined) {
+            this.url = 'assets/' + this.file.titlefile;
+          }
+        }
+      } else {
+        // Gérer le cas où l'offre est undefined
+        console.error('L\'offre est undefined');
+      }
+    } catch (error: any) {
       if (error.status === 403) {
+        this.route.navigate(["login"]);
+      } else {
         this.route.navigate(["login"]);
       }
     }
-  )
-  }
-  ngOnInit(): void {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-
-
 
 
   }

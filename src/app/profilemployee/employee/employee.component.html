@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="nom">
-             <div class="n">   <p>{{emp.nom}}</p></div> <div class="vcv" *ngIf="cv"><p><a (click)="showcv()">Voir CV</a></p></div>
+             <div class="n">   <p>{{emp.nom}}</p></div> <div class="vcv"  *ngIf="aff"><p><a target="_blank" href="/var/www/html/uploads/{{this.emp.fls['cv']}}">Voir CV</a></p></div>
             </div>
         </div>
         <div class="info">

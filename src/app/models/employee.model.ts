@@ -2,10 +2,10 @@ import { Role } from "./Role.model";
 import { filee } from "./filee.model";
 
 export class employee{
-    cin!:string
+  
     nom!:string
     gouvernerat!:string
-    description!:string;
+    fls!: { [key: string]: string };
     city!:string
     num!:string
     specialite!:string
@@ -26,6 +26,7 @@ export class employee{
   files!:filee[]
   employee!:employee
   employeur!:employee
+
 }
 enum TypePack {
     superieur,

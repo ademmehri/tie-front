@@ -41,75 +41,61 @@ export class LoginComponent implements OnInit {
 
    
   }
-  onsubmit(){
-  
+  async onsubmit() {
     this.formsignin.controls['email'].setValue(this.formsignin.controls['email'].value.replace(/\s+/g, ''))
-    if(this.formsignin.controls['email'].errors?.['email'] || this.formsignin.controls['email'].errors?.['required']){
-this.bgcol="border: red 2px solid;"
-
-      this.result1="Email invalide"
-    
+    if (this.formsignin.controls['email'].errors?.['email'] || this.formsignin.controls['email'].errors?.['required']) {
+      this.bgcol = "border: red 2px solid;";
+      this.result1 = "Email invalide";
+    } else {
+      this.bgcol = "border: green 2px solid;";
+      this.result1 = "";
     }
-    else{
-      this.bgcol="border: green 2px solid;"
-      this.result1=""
-    
-    }
-    if( this.verifierMotDePasse(this.formsignin.controls['password'].value)){
-    
-     this.result2=""
-     this.bgcol2="border: green 2px solid;"
-          }
-          else{
-          
-            this.bgcol2="border: red 2px solid;"
-            this.result2="Le champ doit contenir des chiffres, des lettres minuscules et majuscules,  et être d'au moins 8 caractères de long"
-          }
-          if(this.formsignin.valid &&  this.verifierMotDePasse(this.formsignin.controls['password'].value)){
-            let   us=new employee();
-            us.email=this.formsignin.controls['email'].value.trim();
-            us.password=this.formsignin.controls['password'].value.trim();
-           
-            const credentials = { email:us.email, password:us.password };
-            this.userserv.login(credentials).subscribe(
-             (response) => {
-               const headers = response.headers;
-               const authToken = headers.get('Authorization');
-               this.userserv.getuserbyemail(us.email).subscribe(
-                res=>{
-               
-                  this.use=res
-                  console.log(this.use)
-                  this.userserv.save( authToken,us.email,this.use.roles[0].role)
-                  if(this.use.roles[0].role=='ENTR'){
-                    if(localStorage.getItem('redirectUrl')!=undefined){
-                      this.route.navigate(['/test'])
-                     }
-                     else{
-                    this.route.navigate(['/pagepatron'])
-                     }
-                }
-                else if(this.use.roles[0].role=='ADMIN'){
-                  this.route.navigate(['/dachbord'])
-                }
-                else{
-                  this.route.navigate(['/profilemployee'])
-            }
-          }
-               )
-               },
-              (error) => {
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Oops...',
-                 text: 'Persone non existe',
-               
-                })
-              //  this.route.navigate(['/profilemployee'])
-              }
-              )
   
-  }}
+    if (this.verifierMotDePasse(this.formsignin.controls['password'].value)) {
+      this.result2 = "";
+      this.bgcol2 = "border: green 2px solid;";
+    } else {
+      this.bgcol2 = "border: red 2px solid;";
+      this.result2 = "Le champ doit contenir des chiffres, des lettres minuscules et majuscules, et être d'au moins 8 caractères de long";
+    }
+  
+    if (this.formsignin.valid && this.verifierMotDePasse(this.formsignin.controls['password'].value)) {
+      let us = new employee();
+      us.email = this.formsignin.controls['email'].value.trim();
+      us.password = this.formsignin.controls['password'].value.trim();
+  
+      const credentials = { email: us.email, password: us.password };
+      
+      try {
+        const response = await this.userserv.login(credentials).toPromise();
+        const headers = response.headers;
+        const authToken = headers.get('Authorization');
+        const user = await this.userserv.getuserbyemail(us.email).toPromise();
+        this.use = user!;
+        console.log(this.use);
+        this.userserv.save(authToken, us.email, this.use.roles[0].role);
+  
+        if (this.use.roles[0].role === 'ENTR') {
+          if (localStorage.getItem('redirectUrl') !== undefined) {
+            this.route.navigate(['/test']);
+          } else {
+            this.route.navigate(['/pagepatron']);
+          }
+        } else if (this.use.roles[0].role === 'ADMIN') {
+          this.route.navigate(['/dachbord']);
+        } else {
+          this.route.navigate(['/profilemployee']);
+        }
+      } catch (error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Persone non existe',
+        });
+      }
+    }
+  }
+  
   motpasseoubliee(){
     Swal.fire({
       title: 'donner votre email',

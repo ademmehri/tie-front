@@ -286,6 +286,14 @@ textarea{
 label span{
     color: red;
 }
+.wc{
+   text-align: end;
+
+   width: 90%;
+}
+.cl{
+    border-color: red;
+}
 @media screen and (max-width:680px) {
     body{
         width: 100%;

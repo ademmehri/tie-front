@@ -27,12 +27,11 @@ this.userserv.getuserbyemail(userEmail).subscribe(
   res=>{
     this.user_connect=res
     this.role=this.user_connect.roles[0].role
- if(this.user_connect.files!=undefined){
-  this.file=this.user_connect.files.find(file => file.nomfichier === 'image')!;
-if(this.file!=undefined){
-  this.url = 'data:' + this.file.typefile + ';base64,' + this.file.taillefile;
-}
- }
+    if(this.user_connect.fls!=undefined){
+      if(this.user_connect.fls['image']!=undefined){
+       this.url = '/var/www/html/uploads/'+this.user_connect.fls['image'];
+      }
+       }
  
 
   }

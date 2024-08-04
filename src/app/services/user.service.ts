@@ -227,6 +227,15 @@ export class UserService {
         map(clients => this.filterClientsBySession(clients, authtoken))
       );
 } */
-
+      addfile(file:File,id:bigint,type:string):Observable<any>{
+        const formData = new FormData();
+        formData.append('file', file);
+        return this.httpclt.post(this.url+"/auth/addfile/"+id+"/"+type,formData,{responseType: 'text'});
+       }
+       updatefile(file:File,id:bigint,type:string):Observable<any>{
+        const formData = new FormData();
+        formData.append('file', file);
+        return this.httpclt.post(this.url+"/auth/updatefile/"+id+"/"+type,formData,{responseType: 'text'});
+       }
 
 }

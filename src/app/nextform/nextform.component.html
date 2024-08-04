@@ -126,9 +126,10 @@
          
           </div>
             <div class="region">
-                <label for="#">Expérience</label>
+                <label for="#">Expérience <span>(En moins de {{wordsRemaining}} mots)</span></label>
              <div class="con">
-               <textarea name="x"   id="" cols="60" placeholder="Experience" rows="10" formControlName="exp"></textarea>
+               <textarea name="x" [ngClass]="{'cl':formsignin.get('exp')?.errors?.['maxLengthExceeded'] }" class="cl"   id="" cols="60" placeholder="Experience" rows="10" formControlName="exp"></textarea>
+               <p class="wc">Mots: {{wordCount}}</p>
              </div>
            
             </div>

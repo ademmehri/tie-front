@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { employee } from 'src/app/models/employee.model';
@@ -28,46 +29,53 @@ empr!:employee;
 $element:any
 cv!:filee
 bcolor=""
-
+aff=false
   constructor(private router:ActivatedRoute,private offreserv:OffreService,private userserv:UserService,private route:Router){
-    const userEmail = sessionStorage.getItem('email')!;
- if(userEmail!=undefined){
-this.userserv.getuserbyemail(userEmail).subscribe(
-  res=>{
-    this.emp=res
-   
- if(this.emp.files!=undefined){
-  this.file=this.emp.files.find(file => file.nomfichier === 'image')!;
-  this.cv=this.emp.files.find(file => file.nomfichier === 'cv')!;
-if(this.file!=undefined){
-  this.url = 'data:' + this.file.typefile + ';base64,' + this.file.taillefile;
-}
- }
- this.offreserv.getoffredeemployee(this.emp.id).subscribe(
-  res=>{
-this.ofs=res
-if(this.ofs!=undefined){
-  this.nombreOffres= this.ofs.length
-}
-  },(error) => {
-    if (error.status === 403) {
-      this.route.navigate(["/login"]);
-    }
+
   }
- )
-  },(error) => {
-    if (error.status === 403) {
-      this.route.navigate(["/login"]);
-    }
-  }
-)
- }
-  }
-  ngOnInit(): void {
+
+  async ngOnInit() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
     localStorage.clear();
+    const userEmail = sessionStorage.getItem('email');
+    if (userEmail) {
+      try {
+        const empResult = await this.userserv.getuserbyemail(userEmail).toPromise();
+        if (empResult) {
+          this.emp = empResult;
+          
+          if(this.emp.fls!=undefined){
+            if(this.emp.fls['image']!=undefined){
+             this.url = '/var/www/html/uploads/'+this.emp.fls['image'];
+            }
+            if(this.emp.fls['cv']!=undefined){
+             this.aff=true
+             }
+             }
+  
+          try {
+            const ofsResult = await this.offreserv.getoffredeemployee(this.emp.id).toPromise();
+            if (ofsResult) {
+              this.ofs = ofsResult;
+              this.nombreOffres = this.ofs.length;
+            }
+          } catch (error) {
+            if (error instanceof HttpErrorResponse && error.status === 403) {
+              this.route.navigate(['/login']);
+            }
+          }
+        } else {
+          throw new Error('User not found');
+        }
+      } catch (error) {
+        if (error instanceof HttpErrorResponse && error.status === 403) {
+          this.route.navigate(['/login']);
+        }
+      }
+    }
   }
+  
   logout(){
     
    this.userserv.logout();
