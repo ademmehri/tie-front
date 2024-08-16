@@ -29,13 +29,13 @@ export class employee{
 
 }
 enum TypePack {
-    superieur,
-    restaurer,
-    servir,
-    gold
+  basique,
+  premium,
+  avancée
   }
   enum Duree {
    six_mois,
    un_ans,
-   set_jours
+   set_jours,
+   neuf_mois
   }

@@ -9,13 +9,7 @@
       <ul>
         <li><a class="" routerLinkActive="ac" routerLink="/pageprincipale">Acceuil</a></li>
 <li class="pr"><a routerLinkActive="ac" routerLink="/propos">À propos de nous</a></li>
-
-<ul class="menu" *ngIf="showtarif" (mouseleave)="showtarif=false ">
-  <li routerLink="/souspackpayment">Hôtel</li>
-  <li routerLink="/spackrest">
-    Restaurant/Salon de thé</li>
-</ul>
-<li (click)="showt()" (mouseenter)="showtarif=true" routerLinkActive="ac" ><a>Tarifs</a></li>
+<li  ><a  routerLinkActive="ac" routerLink="/spackrest">Tarifs</a></li>
 <li><a routerLinkActive="ac" (click)=" scrollToContactIfOnHomePage()">Contact</a></li> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 <li *ngIf="role!='ENTR' && role!='USER' " class="ca an"> 
  <a routerLink="/signup"> <i class='bx bx-user'></i>Candidat</a><div class="bar"></div><a class="em" routerLink="/signuppatron"><i class='bx bx-briefcase'></i><span>Employeur</span></a>
@@ -43,11 +37,7 @@
 <div class="n">
   <div class="a" routerLink="/pageprincipale"><a>Acceuil</a></div>
   <div class="a"  routerLink="/propos"><a>À propos de nous</a></div>
-  <div class="a" (click)="showt()"><a>Tarifs</a></div>
-  <div *ngIf="showtarif">
-    <div class="t" routerLink="/souspackpayment"><a>Hôtel</a></div>
-  <div class="t" routerLink="/spackrest"><a>  Restaurant/Salon de thé</a></div>
-  </div>
+  <div class="a"  routerLink="/spackrest"><a>Tarifs</a></div>
   <div class="a" (click)=" scrollToContactIfOnHomePage()"><a>Contact</a></div>
 </div>
  </div>

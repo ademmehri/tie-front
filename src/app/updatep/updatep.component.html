@@ -46,15 +46,15 @@
                       </tr>
                         <tr>
                             <td class="t">Date de naissance</td>
-                            <td class="g dn" [style]="bdate">  <select  formControlName="j" >
+                            <td class="g dn" >  <select  formControlName="j" [style]="bdate">
                               <option value="">Jour</option>
                               <option *ngFor="let day of days" [value]="day">{{ day }}</option>
                             </select>
-                            <select formControlName="m" >
+                            <select formControlName="m" [style]="bdate" >
                               <option value="">Mois</option>
                               <option *ngFor="let month of months" [value]="month.value">{{ month.name }}</option>
                             </select>
-                            <select formControlName="a">
+                            <select formControlName="a" [style]="bdate">
                               <option value="">Année</option>
                               <option *ngFor="let year of years" [value]="year">{{ year }}</option>
                             </select></td>
@@ -69,7 +69,7 @@
                         </tr>
                         <tr>
                           <td class="t r">Etat</td>
-                          <td class="g r"><input type="radio" value="Stagiere" formControlName="rad2"> Stagiere <input type="radio" value="Employee" formControlName="rad2"> Employee</td>
+                          <td class="g r"><input type="radio" value="Stagiaire" formControlName="rad2"> Stagiaire <input type="radio" value="Employé(e)" formControlName="rad2"> Employé(e)</td>
                       </tr>
                         <tr>
                             <td class="t sp">Spécialité</td>
@@ -95,7 +95,14 @@
                         </tr>
                         <tr>
                             <td class="t">Expérience</td>
-                     <td class="g"><textarea   name="" id="" cols="30" rows="4" formControlName="exp"></textarea></td>
+                     <td class="g">  <select  [style]="exp"  name="select" formControlName="exp">
+                      <option value="">Expérience</option>
+                      <option value="0-6 mois">0-6 mois</option>
+                      <option value="6 mois-1 ans">6 mois-1 ans</option>
+                      <option value="1 ans-5 ans">1 ans-5 ans</option>
+                      <option value="5 ans et plus">5 ans et plus</option>
+                     
+                     </select></td>
                         </tr>
                         <tr>
                             <td class="t">Région</td>

@@ -30,8 +30,8 @@
         </thead>
         <tbody>
             <tr *ngFor="let o of ofs">
-                <td class="img" *ngIf="o.employee.files.length!=0"><img src="assets/{{o.employee.files[0].titlefile}}" alt="image_user"></td>
-                <td class="img" *ngIf="o.employee.files.length==0"><img src="assets/par2.png" alt="image_user"></td>
+                <td class="img" *ngIf="o.employee.fls['image']!=undefined"><img src="uploads/{{o.employee.fls['image']}}" alt="image_user"></td>
+                <td class="img" *ngIf="o.employee.fls['image']==undefined"><img src="assets/par2.png" alt="image_user"></td>
                 <td>{{o.employee.nom}}</td>
                 <td>{{o.employee. specialite}}</td>
                 <td>{{o.employee.num}}</td>

@@ -264,17 +264,17 @@
         </div>
           </div>
         </div>
-        <div class="cn2">
-<div class="i1">
-    <input type="text" placeholder="Nom"> 
+        <div class="cn2" [formGroup]="formsignin">
+<div class="i1" [ngClass]="{'err input': formsignin.get('nom')!.invalid && (formsignin.get('nom')!.dirty || formsignin.get('nom')!.touched)}">
+    <input type="text" placeholder="Nom" formControlName="nom"> 
 </div>
-<div class="i1">
-    <input type="text" placeholder="Email">
+<div class="i1" [ngClass]="{'err input': formsignin.get('email')!.invalid && (formsignin.get('email')!.dirty || formsignin.get('email')!.touched)}">
+    <input type="text" placeholder="Email" formControlName="email">
 </div>
-<div class="i1">
-   <textarea  class="input" placeholder="Message" id="" cols="30" rows="10"></textarea>
+<div class="i1"  [ngClass]="{'err .inputt': formsignin.get('desc')!.invalid && (formsignin.get('desc')!.dirty || formsignin.get('desc')!.touched)}">
+   <textarea  class="inputt" placeholder="Message" id="" cols="30" rows="10" formControlName="desc"></textarea>
 </div>
-   <div class="bt"><a (click)="nav()">Envoyer</a></div>
+   <div class="bt"><a (click)="contact()">Envoyer</a></div>
         </div>
     </div>
 </section>

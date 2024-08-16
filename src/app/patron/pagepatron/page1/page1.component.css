@@ -10,14 +10,14 @@ section{
     background-color: #F8F8FE;
     display: flex;
     align-items: center;
-    justify-content: center;
+   justify-content: center;
     width: 100%;
 }
 .relod i{
     cursor: pointer;
 }
 .sb{
-    width: 80%;
+    width:fit-content;
 }
 .titre{
     width: 100%;
@@ -35,7 +35,7 @@ span{
     color: #2772D6;
 }
 .navbar{
-width:100%;
+width:fit-content;
 height: 100%;
 border-radius: 53px;
 background-color: #fff;
@@ -44,7 +44,7 @@ align-items: center;
 justify-content: center;
 margin-bottom: 50px;
 margin-top: 20px;
-padding-left: 50px;
+
 }
 form{
     display: flex;
@@ -194,7 +194,7 @@ text-align: center;
     justify-content: center;
 }
 .re{
-    width: 18%;
+    max-width: 20%;
 }
 
 @media screen and (max-width:600px){
@@ -206,23 +206,13 @@ text-align: center;
         font-size: 25px;
     }
     .navbar{
-      flex-direction: column;
-        height: 100%;
-        padding-left: 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     }
   
-    .ba{
-    display: none;
-    background-color: #fff;
-    }
+
  
-    .b{
-        clip-path: none;
-        flex-direction: column;
-   height: 50%;
-   width: 100%;
-   margin: 5px;
-    }
     .employee{
         display: flex;
         flex-wrap: wrap;
@@ -234,21 +224,8 @@ text-align: center;
         width: auto;
         margin-left: 0px;
     }
-    ul li{
-       
-        margin-bottom: 10px;
-        display: flex;
-        justify-content: start;
-        align-items: start;
-       padding-left: 0px;
-       margin-left: 0px;
-    }
-    ul {
-      
-    }
-    ul li select{
-        width: 100%;
-    }
+    
+   
     .ba{
      display: none;
      background-color: aliceblue;
@@ -259,11 +236,7 @@ text-align: center;
    .bt{
     margin-top: 25px;
    }
-   ul li select{
-    width: 200px;
-    font-size: 14px;
-
-}
+  
 .bt{
     margin-left: 10px;
 }
@@ -276,9 +249,10 @@ text-align: center;
     width: 220px;
     height: 150px;
 }
-  .re{
-    width: 80%;
-  }
+.re{
+    min-width: 95%;
+}
+
     
      }
      @media screen and (min-width:601px) and (max-width:1150px){
@@ -305,8 +279,8 @@ text-align: center;
         padding-left: 10px;
     }
     .re{
-        width: 80%;
-      }
+        min-width: 95%;
+    }
     .ba{
         margin: 0px;
         width: 0px;
@@ -359,11 +333,14 @@ text-align: center;
         }
         .b{
          clip-path: none;
+        
        
         }
         ul{
             padding: 0px;
         }
+     
+       
   
             
              }

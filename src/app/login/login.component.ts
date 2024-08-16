@@ -72,11 +72,11 @@ export class LoginComponent implements OnInit {
         const authToken = headers.get('Authorization');
         const user = await this.userserv.getuserbyemail(us.email).toPromise();
         this.use = user!;
-        console.log(this.use);
+      
         this.userserv.save(authToken, us.email, this.use.roles[0].role);
   
         if (this.use.roles[0].role === 'ENTR') {
-          if (localStorage.getItem('redirectUrl') !== undefined) {
+          if (localStorage.getItem('redirectUrl') != undefined) {
             this.route.navigate(['/test']);
           } else {
             this.route.navigate(['/pagepatron']);

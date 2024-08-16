@@ -68,7 +68,7 @@ cursor: pointer;
 
 
 .profil{
-    max-width: 688px;
+    width: 35%;
     word-wrap: break-word; 
    height: auto;
   margin: 10px;
@@ -392,10 +392,8 @@ table tr .t{
     
 }
 @media screen and (min-width:681px) and (max-width:1200px) {
-    .con{
-        height: 100%;
-    }
-    .profil, .p3, .info, .con {
+
+    .profil{
         min-height: 100%;
     }
     .donee{
@@ -411,5 +409,12 @@ table tr .t{
     }
     .sp1{
         font-size: 30px;
+    }
+    .profil{
+        width: 60%;
+
+    }
+    .con{
+        height: 70vh;
     }
 }

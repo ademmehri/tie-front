@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -25,6 +26,7 @@ url='assets/par2.png'
 desc!:String
 formsignin!:FormGroup;
 result1!:string
+aff=false
   constructor(private  router:ActivatedRoute,private userserv:UserService,private offreserv:OffreService,private fb:FormBuilder,private route:Router){
     this.formsignin=this.fb.group(
       {
@@ -34,73 +36,84 @@ result1!:string
     )
   
   }
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
     const userEmail = sessionStorage.getItem('email')!;
-    this.idemp=JSON.parse(sessionStorage.getItem('userId')!);
-    if(userEmail!=undefined){
-   this.userserv.getuserbyemail(userEmail).subscribe(
-     res=>{
-       this.empr=res
-     },(error) => {
-      if (error.status === 403) {
-        this.route.navigate(["login"]);
-      }
-    }
-   )
-    }
-    this.userserv.getuserbyid(this.idemp).subscribe(
-      res=>{
-        this.emp=res
-        if(this.emp.files!=undefined){
-          this.file=this.emp.files.find(file => file.nomfichier === 'image')!;
-          this.cv=this.emp.files.find(file => file.nomfichier === 'cv')!;
-        if(this.file!=undefined){
-          this.url = 'data:' + this.file.typefile + ';base64,' + this.file.taillefile;
-        }
-         }
-      },(error) => {
-        if (error.status === 403) {
-          this.route.navigate(["login"]);
+    this.idemp = JSON.parse(sessionStorage.getItem('userId')!);
+  
+    try {
+      if (userEmail !== undefined) {
+        const userResult = await this.userserv.getuserbyemail(userEmail).toPromise();
+        if (userResult !== undefined) {
+          this.empr = userResult;
+        } else {
+          this.route.navigate(['/login']);
         }
       }
-    )
-  }
-  onsubmit(){
-    if(this.formsignin.controls['offre'].errors?.['required']){
-      this.result1="s'il vous plait saisire votre offre!!!!";
-      
-    }
-    else{
-      this.result1="";
-    }
-    if(this.formsignin.valid){
-      this.offreserv.addoffre(this.idemp,this.empr.id,this.formsignin.controls['offre'].value).subscribe(
-        res=>{
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Offre enregistré",
-            showConfirmButton: false,
-            timer: 1500
-          });
-          this.route.navigate(["pagepatron"]);
-        },(error) => {
-          if (error.status === 403) {
-            this.route.navigate(["login"]);
+  
+      const empResult = await this.userserv.getuserbyid(this.idemp).toPromise();
+      if (empResult !== undefined) {
+        this.emp = empResult;
+        if (this.emp.fls !== undefined) {
+          if (this.emp.fls['image'] !== undefined) {
+            this.url = 'uploads/' + this.emp.fls['image'];
+          }
+          if (this.emp.fls['cv'] !== undefined) {
+            this.aff = true;
           }
         }
-      )
-   
-
+      } else {
+        this.route.navigate(['/login']);
+      }
+    } catch (error) {
+      if (error instanceof HttpErrorResponse && error.status === 403) {
+        this.route.navigate(['login']);
+      } else {
+        this.route.navigate(['/login']);
+      }
     }
-
   }
+  
+  async onsubmit(): Promise<void> {
+    // Vérification des erreurs dans le formulaire
+    if (this.formsignin.controls['offre'].errors?.['required']) {
+      this.result1 = "S'il vous plaît, saisissez votre offre !";
+    } else {
+      this.result1 = "";
+    }
+  
+    // Si le formulaire est valide
+    if (this.formsignin.valid) {
+      try {
+        // Appel au service pour ajouter l'offre
+        await this.offreserv.addoffre(this.idemp, this.empr.id, this.formsignin.controls['offre'].value).toPromise();
+        
+        // Affichage de l'alerte de succès
+        await Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Offre enregistrée',
+          showConfirmButton: false,
+          timer: 1500
+        });
+      
+          this.route.navigate(['pagepatron']);
+       
+      } catch (error) {
+        if (error instanceof HttpErrorResponse && error.status === 403) {
+          this.route.navigate(['login']);
+        } else {
+          this.route.navigate(['/login']);
+        }
+      }
+    }
+  }
+  
   annuler(){
     this.route.navigate(["profilemployee"]);
   }
-  showcv(){
+ /* showcv(){
     if (typeof this.cv.taillefile === 'string') {
       // Supposons que img.image contient le contenu base64 du PDF
       const base64PDF = this.cv.taillefile;
@@ -120,6 +133,6 @@ result1!:string
       // Ouvrir cette URL dans un nouvel onglet
       window.open(url, '_blank');
   } 
-  }
+  }*/
 
 }

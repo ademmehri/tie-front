@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-body',
   templateUrl: './body.component.html',
@@ -11,14 +13,23 @@ export class BodyComponent implements AfterViewInit {
   private startX: any;
   private startScrollLeft: any;
   private timeoutId: any;
+  formsignin!:FormGroup;
   private isAutoPlay = true;
   reponse:any=[]
-constructor(private userserv:UserService){
+constructor(private userserv:UserService,private fb:FormBuilder){
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
   this.userserv.getnbsp().subscribe(
     res=>{
       this.reponse=res
+    }
+  )
+  this.formsignin=this.fb.group(
+    {
+    
+      "email":["",[Validators.required,Validators.email]],
+      "nom":["",Validators.required],
+      "desc":["",Validators.required],
     }
   )
 }
@@ -76,6 +87,23 @@ nav(){
       };
     
       autoPlay();
+    }
+  }
+  contact(){
+    if(this.formsignin.valid){
+      this.userserv.contact(this.formsignin.controls['desc'].value,this.formsignin.controls['nom'].value,this.formsignin.controls['email'].value.trim()).subscribe(
+        res=>{
+          this.nav()
+          this.formsignin.reset()
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Votre réclamation a bien été envoyée. Nous vous remercions pour votre contact",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+      )
     }
   }
 

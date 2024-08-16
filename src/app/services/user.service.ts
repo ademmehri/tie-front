@@ -85,7 +85,7 @@ export class UserService {
             return this.httpclt.post(this.url+"/auth/updatePassword",use,{responseType: 'text'});
            }
          
-           getemployeeGoldh(): Observable<employee[]> {
+        /*   getemployeeGoldh(): Observable<employee[]> {
             const headers = new HttpHeaders({
               'Content-Type': 'application/json',
               'Authorization': 'Bearer ' + this.getItem(),
@@ -167,7 +167,7 @@ export class UserService {
            // .pipe(map(clients=>this.filterClientsBySession(clients,this.getItem()!))
            // )
          
-          }
+          }*/
        
           getoffrecrrerparemployeur(id:bigint):Observable<any[]>{
             const headers = new HttpHeaders({
@@ -236,6 +236,26 @@ export class UserService {
         const formData = new FormData();
         formData.append('file', file);
         return this.httpclt.post(this.url+"/auth/updatefile/"+id+"/"+type,formData,{responseType: 'text'});
+       }
+       getemployeehotel():Observable<employee[]>{
+        const headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' +this.getItem(),
+        });
+        return this.httpclt.get<employee[]>(this.url+"/auth/rechercheemployeehotel",{headers})
+      }
+      getemployeerest():Observable<employee[]>{
+        const headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' +this.getItem(),
+        });
+        return this.httpclt.get<employee[]>(this.url+"/auth/rechercheemployeerest",{headers})
+      }
+      contact(desc:string,nom:string,email:string):Observable<any>{
+        const formData = new FormData();
+        formData.append('desc', desc);
+        formData.append('nom', nom);
+        return this.httpclt.post(this.url+"/auth/contact/"+email,formData,{responseType: 'text'});
        }
 
 }

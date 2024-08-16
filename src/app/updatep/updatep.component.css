@@ -444,6 +444,9 @@ table tr .mb-3{
     margin-right:1px;
 
   }
+  table tr  .g select{
+margin-top: 20px;
+  }
 @media screen and (max-width:680px) {
     .con{
         margin-top: 100px;

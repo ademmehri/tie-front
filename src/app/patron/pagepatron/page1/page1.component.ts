@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,7 +19,9 @@ export class Page1Component implements OnInit {
 s=""
 r=""
 c=""
+exp=""
 dur!:any
+pack!:any
 droitpayement!:boolean
 
 
@@ -31,7 +34,7 @@ formsignin!:FormGroup;
  test!:any
  employees!:employee[]
  etat=''
- hotelsup=["Directeur d’hôtel", "Directeur d'hebergement", 
+ /*hotelsup=["Directeur d’hôtel", "Directeur d'hebergement", 
  "Adjoint de directeur en hotellerie","Directeur de la restauration",
  "Directuer financier d'un hotel","Guest relation manager",
  "Manager dans la restauration","Spa manager","Yield manager"]
@@ -76,7 +79,8 @@ formsignin!:FormGroup;
  "Barman","Patissier",
  "Boucher","Boulanger","Poissonnier","Chocalatier-confisseur","Charcutier-traiteur","Econome","Gérant","Serveur","Chef de rang",
  "Plongeur","Serveuse",
- "Portier"]
+ "Portier"]*/
+ distinctSpecialties: string[] = [];
  pageSize: string|number|undefined;
 p: string|number|undefined;
 
@@ -90,7 +94,8 @@ this.userserv.getuserbyemail(userEmail).subscribe(
  res=>{
    this.empr=res
    this.dur=this.empr.duree
-   if(this.dur=='set_jours'){
+this.pack=this.empr.pack
+  /* if(this.dur=='set_jours'){
     Swal.fire({
       title: "Offre spéciale!",
       color:"#2772D6",
@@ -100,7 +105,7 @@ this.userserv.getuserbyemail(userEmail).subscribe(
       imageHeight: 250,
       imageAlt: "Custom image"
     });
-   }
+   }*/
   })}
 
 
@@ -132,23 +137,28 @@ this.userserv.getuserbyemail(userEmail).subscribe(
     this.c=e.target.value;
 
   }
+  onselectexp(e:any){
+    this.exp=e.target.value;
+  }
   consulter(idemp:number){
  
     this.route.navigate(["petitcv/"+this.id+"/"+idemp]);
   }
-  rechercher(){
-   this.employees= this.employees.filter(employee => {
-      // Vérifier si les critères correspondent aux propriétés de l'employé
-      return employee.etat === this.etat
-          && employee.gouvernerat === this.r
-          && employee.specialite === this.s
-          && employee.sexe === this.c;
-  });
+  rechercher() {
+    this.employees = this.employees.filter(employee => {
+      
+      return (!this.etat || employee.etat == this.etat)
+          && (!this.r || employee.gouvernerat == this.r)
+          && (!this.s || employee.specialite == this.s)
+          && (!this.c || employee.sexe == this.c)
+          && (!this.exp || employee.exp == this.exp);
+    });
+
   }
+  
 
   payement(){
     //test de payment 7jours
-    
     this.dur=this.empr.duree
   
     if(this.dur=='set_jours'){
@@ -159,14 +169,8 @@ this.userserv.getuserbyemail(userEmail).subscribe(
       dateFinPack.setDate(dateFinPack.getDate()+7);
    
       if(dateActuelle >= dateFinPack){
-       if(this.empr.specialite=='Hotel'){
-        this.route.navigate(["/souspackpayment"])
-        Swal.fire("Votre abonmment a été expiré !! Achetez de nouveau");
-       }
-        else{
           this.route.navigate(["/spackrest"])
           Swal.fire("Votre abonmment a été expiré !! Achetez de nouveau");
-        }
       }
     }
     //test de payment 6mois
@@ -175,19 +179,10 @@ this.userserv.getuserbyemail(userEmail).subscribe(
    
       const dateActuelle: Date = new Date();
       const dateFinPack: Date = new Date(this.empr.d_inscrit);
-      
       dateFinPack.setMonth(dateFinPack.getMonth() + 6);
-   
-     
       if(dateActuelle >= dateFinPack){
-        if(this.empr.specialite=='Hotel'){
-          this.route.navigate(["/souspackpayment"])
-          Swal.fire("Votre abonmment a été expiré !! Achetez de nouveau");
-         }
-          else{
             this.route.navigate(["/spackrest"])
-        
-          }
+            Swal.fire("Votre abonmment a été expiré !! Achetez de nouveau");
       }
     }
     //test de payment 1ans
@@ -199,178 +194,67 @@ this.userserv.getuserbyemail(userEmail).subscribe(
       
       dateFinPack.setFullYear(dateFinPack.getFullYear() + 1);
       if(dateActuelle >= dateFinPack){
-        if(this.empr.specialite=='Hotel'){
-          this.route.navigate(["/souspackpayment"])
-          Swal.fire("Votre abonmment a été expiré !! Achetez de nouveau");
-         }
-          else{
             this.route.navigate(["/spackrest"])
-         
-          }
+            Swal.fire("Votre abonmment a été expiré !! Achetez de nouveau");
       }
     }
+       //test de payment 9mois
+       this.dur=this.empr.duree
+       if(this.dur=='neuf_mois'){
+         const dateActuelle: Date = new Date();
+         const dateFinPack: Date = new Date(this.empr.d_inscrit);
+         dateFinPack.setMonth(dateFinPack.getMonth() + 9);
+         if(dateActuelle >= dateFinPack){
+               this.route.navigate(["/spackrest"])
+               Swal.fire("Votre abonmment a été expiré !! Achetez de nouveau");
+         }
+       }
   }
 
 totalItems!:number
- verfieracces(){
-  this.dateexpiration=new Date()
+async verfieracces() {
+  this.dateexpiration = new Date();
   const userEmail = sessionStorage.getItem('email')!;
-  if(userEmail!=undefined){
- this.userserv.getuserbyemail(userEmail).subscribe(
-   res=>{
-     this.empr=res
-    /* this.userserv.getemployees().subscribe(
-      res=>{
-        this.employees=res
-        this.employees= this.employees.filter(employee => {
-          // Vérifie si l'employé a au moins un rôle avec le nom "USER"
-          return employee.roles.some(role => role.role === 'USER');
-      });
-        this.employees.forEach(employee => {
-          // Filtrer les fichiers pour ne garder que ceux avec nomfichier === 'image'
-          employee.files = employee.files.filter(file => file.nomfichier === 'image');
-      });
-
+  
+  if (userEmail !== undefined) {
+    try {
+      const userResult = await this.userserv.getuserbyemail(userEmail).toPromise();
+      if (userResult) {
+        this.empr = userResult;
+     
+       // this.test = this.empr.pack;
+        this.payement();
+        
+       
+          try {
+            const hotelEmployeesResult = await this.userserv.getemployeehotel().toPromise();
+            if (hotelEmployeesResult) {
+              this.employees = hotelEmployeesResult.filter(employee => {
+                // Vérifie si l'employé a au moins un rôle avec le nom "USER"
+                return employee.roles.some(role => role.role === 'USER');
+              });
+                     //on retourne les sp distinct
+                     const specialties = this.employees.map(employee => employee.specialite);
+                     this.distinctSpecialties = Array.from(new Set(specialties));
+            } else {
+              this.route.navigate(['/login']);
+            }
+          } catch (error) {
+            if (error instanceof HttpErrorResponse && error.status === 403) {
+              this.route.navigate(['/login']);
+            }
+          }
+     
+      } else {
+        this.route.navigate(['/login']);
       }
-     )
-  */
-     this.test=this.empr.pack
-    this.payement();
-     if(this.test=="superieur" && this.empr.specialite=="Hotel"){
-       this.userserv.getemployeeSuperieur().subscribe(
-         res=>{
-         this.employees=res
-        this.employees= this.employees.filter(employee => {
-          // Vérifie si l'employé a au moins un rôle avec le nom "USER"
-          return employee.roles.some(role => role.role === 'USER');
-      });
-        this.employees.forEach(employee => {
-          // Filtrer les fichiers pour ne garder que ceux avec nomfichier === 'image'
-          employee.files = employee.files.filter(file => file.nomfichier === 'image');
-      });
-    
-       })
-     }
-     else if(this.test=="restaurer" && this.empr.specialite=="Hotel"){
-       this.userserv.getemployeeRestaurer().subscribe(
-         res=>{
-           this.employees=res
-        this.employees= this.employees.filter(employee => {
-          // Vérifie si l'employé a au moins un rôle avec le nom "USER"
-          return employee.roles.some(role => role.role === 'USER');
-      });
-        this.employees.forEach(employee => {
-          // Filtrer les fichiers pour ne garder que ceux avec nomfichier === 'image'
-          employee.files = employee.files.filter(file => file.nomfichier === 'image');
-      });
-       
-         }
-       )
-     }
-     else if(this.test=="servir"  && this.empr.specialite=="Hotel"){
-       this.userserv.getemployeeServir().subscribe(
-         res=>{
-             this.employees=res
-        this.employees= this.employees.filter(employee => {
-          // Vérifie si l'employé a au moins un rôle avec le nom "USER"
-          return employee.roles.some(role => role.role === 'USER');
-      });
-        this.employees.forEach(employee => {
-          // Filtrer les fichiers pour ne garder que ceux avec nomfichier === 'image'
-          employee.files = employee.files.filter(file => file.nomfichier === 'image');
-      });
-         
-         }
-       )
-     }
-     
-     else if(this.test=="gold"  && this.empr.specialite=="Hotel"){
-  
-       this.userserv. getemployeeGoldh().subscribe(
-         res=>{
-            this.employees=res
-            console.log(this.employees)
-        this.employees= this.employees.filter(employee => {
-          // Vérifie si l'employé a au moins un rôle avec le nom "USER"
-          return employee.roles.some(role => role.role === 'USER');
-      });
-        this.employees.forEach(employee => {
-          // Filtrer les fichiers pour ne garder que ceux avec nomfichier === 'image'
-          employee.files = employee.files.filter(file => file.nomfichier === 'image');
-      });
-       
-         }
-       )
-     }
-     else if(this.test=="gold"  && this.empr.specialite!="Hotel"){
-       this.userserv.getemployeeGoldr().subscribe(
-         res=>{
-           this.employees=res
-        this.employees= this.employees.filter(employee => {
-          // Vérifie si l'employé a au moins un rôle avec le nom "USER"
-          return employee.roles.some(role => role.role === 'USER');
-      });
-        this.employees.forEach(employee => {
-          // Filtrer les fichiers pour ne garder que ceux avec nomfichier === 'image'
-          employee.files = employee.files.filter(file => file.nomfichier === 'image');
-      });
-     
-         }
-       )
-     }
-     else if(this.test=="superieur"  && this.empr.specialite!="Hotel"){
-       this.userserv.getemployeeSuperieur_res().subscribe(
-         res=>{
-            this.employees=res
-        this.employees= this.employees.filter(employee => {
-          // Vérifie si l'employé a au moins un rôle avec le nom "USER"
-          return employee.roles.some(role => role.role === 'USER');
-      });
-        this.employees.forEach(employee => {
-          // Filtrer les fichiers pour ne garder que ceux avec nomfichier === 'image'
-          employee.files = employee.files.filter(file => file.nomfichier === 'image');
-      });
-        
-         }
-       )
-     }
-     else if(this.test=="restaurer"  && this.empr.specialite!="Hotel"){
-       this.userserv.getemployeeServir_res().subscribe(
-         res=>{
-            this.employees=res
-        this.employees= this.employees.filter(employee => {
-          // Vérifie si l'employé a au moins un rôle avec le nom "USER"
-          return employee.roles.some(role => role.role === 'USER');
-      });
-        this.employees.forEach(employee => {
-          // Filtrer les fichiers pour ne garder que ceux avec nomfichier === 'image'
-          employee.files = employee.files.filter(file => file.nomfichier === 'image');
-      });
-        
-         }
-       )
-     }
-     else if(this.test=="servir"  && this.empr.specialite!="Hotel"){
-       this.userserv.getemployeeServir_res().subscribe(
-         res=>{
-            this.employees=res
-        this.employees= this.employees.filter(employee => {
-          // Vérifie si l'employé a au moins un rôle avec le nom "USER"
-          return employee.roles.some(role => role.role === 'USER');
-      });
-        this.employees.forEach(employee => {
-          // Filtrer les fichiers pour ne garder que ceux avec nomfichier === 'image'
-          employee.files = employee.files.filter(file => file.nomfichier === 'image');
-      });
-   
-         }
-       )
-     }
-  
-   }
- )
+    } catch (error) {
+      if (error instanceof HttpErrorResponse && error.status === 403) {
+        this.route.navigate(['/login']);
+      }
+    }
   }
- }
+}
  naviguer(id:bigint){
   sessionStorage.setItem('userId',id.toString());
   this.route.navigate(['/petitcv'])

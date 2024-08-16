@@ -16,50 +16,32 @@
               <div class="re">
                 <i class='bx bxs-user'></i>
                 <select  class="select" (change)="onselectetat($event)">
-                  <option value="1">Choisir votre Candidat</option>
-                  <option value="Employee">Employee</option>
-                  <option value="Stagiare">Stagiare</option>
+                  <option value="">Candidat</option>
+                  <option value="Employé(e)">Employé(e)</option>
+                  <option value="Stagiaire">Stagiaire</option>
                 </select>
               </div>
-         
+              <div class="ba" *ngIf="pack=='premium'"></div>
+              <div class="re" *ngIf="pack=='premium'">
+                <i class='bx bxs-user'></i>
+                <select  (change)="onselectexp($event)" >
+                  <option value="">Expérience</option>
+                  <option value="0-6 mois">0-6 mois</option>
+                  <option value="6 mois-1 ans">6 mois-1 ans</option>
+                  <option value="1 ans-5 ans">1 ans-5 ans</option>
+                  <option value="5 ans et plus">5 ans et plus</option>
+                 </select>
+              </div>
             
             <div class="ba"></div>
            
-              <div class="re">
+              <div class="re" *ngIf="empr">
                 <i class='bx bxs-graduation'></i>
-                <select  class="select" (change)="onselect($event)"  *ngIf="test=='superieur' && empr.specialite=='Hotel'">
-                  <option value="1" >Choisir votre Spécilalité</option>
-              <option  *ngFor="let t of hotelsup" value="{{t}}">{{t}}</option>
+                <select  class="select" (change)="onselect($event)"  >
+                  <option value="" >Spécilalité</option>
+              <option  *ngFor="let t of distinctSpecialties" value="{{t}}">{{t}}</option>
                 </select>
-                <select  class="select" (change)="onselect($event)"  *ngIf="test=='restaurer'  && empr.specialite=='Hotel'">
-                  <option value="1" >Choisir votre Spécilalité</option>
-              <option  *ngFor="let t of hotelrest" value="{{t}}">{{t}}</option>
-                </select>
-                <select  class="select" (change)="onselect($event)"  *ngIf="test=='servir'  && empr.specialite=='Hotel'">
-                  <option value="1" >Choisir votre Spécilalité</option>
-              <option  *ngFor="let t of hotelserv" value="{{t}}">{{t}}</option>
-                </select>
-
-                <select  class="select" (change)="onselect($event)"  *ngIf="test=='superieur' && empr.specialite!='Hotel'">
-                  <option value="1" >Choisir votre Spécilalité</option>
-              <option  *ngFor="let t of sup" value="{{t}}">{{t}}</option>
-                </select>
-                <select  class="select" (change)="onselect($event)"  *ngIf="test=='restaurer'  && empr.specialite!='Hotel'">
-                  <option value="1" >Choisir votre Spécilalité</option>
-              <option  *ngFor="let t of rest" value="{{t}}">{{t}}</option>
-                </select>
-                <select  class="select" (change)="onselect($event)"  *ngIf="test=='servir'  && empr.specialite!='Hotel'">
-                  <option value="1" >Choisir votre Spécilalité</option>
-              <option  *ngFor="let t of serv" value="{{t}}">{{t}}</option>
-                </select>
-                <select  class="select" (change)="onselect($event)"  *ngIf="test=='gold'  && empr.specialite!='Hotel'">
-                  <option value="1" >Choisir votre Spécilalité</option>
-              <option  *ngFor="let t of gold" value="{{t}}">{{t}}</option>
-                </select>
-                <select  class="select" (change)="onselect($event)"  *ngIf="test=='gold'  && empr.specialite=='Hotel'">
-                  <option value="1" >Choisir votre Spécilalité</option>
-              <option  *ngFor="let t of hotelgold" value="{{t}}">{{t}}</option>
-                </select>
+           
               </div>
          
           
@@ -97,18 +79,19 @@
                 </select>
               </div>
         
-            <div class="ba"></div>
+            <div class="ba" *ngIf="pack=='premium' || pack=='avancée' "></div>
           
-              <div class="re">
+              <div class="re" *ngIf="pack=='premium' || pack=='avancée' ">
                 <i class='bx bx-group'></i>
                 <select  class="select" (change)="onselectsexe($event)">
-                  <option value="1">Choisir votre Sexe</option>
+                  <option value="">Sexe</option>
                   <option value="Homme">Homme</option>
                   <option value="Femme">Femme</option>
                   <option value="tous">tous</option>
                 
                 </select>
               </div>
+            
                 <div class="bt" ><i class='bx bx-filter-alt'></i><a  (click)="rechercher()">Rechercher</a></div>
           </div>
     </div>
@@ -120,11 +103,11 @@
           <div class="card"  (click)="naviguer(emp.id)">
             <div class="ico">
             
-                <div *ngIf=" emp.files.length==0">
+                <div *ngIf=" this.emp.fls['image']==undefined">
                   <img src="assets\backpatron.png" alt="image">
                 </div>     
-                <div *ngIf=" emp.files.length!=0">
-                  <img src="assets\{{emp.files[0].titlefile}}" alt="image">
+                <div *ngIf=" this.emp.fls['image']!=undefined">
+                  <img src="uploads\{{this.emp.fls['image']}}" alt="image">
                 </div>   
               
             </div>

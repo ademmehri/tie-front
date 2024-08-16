@@ -74,7 +74,7 @@ result!:employee
         "j":["",Validators.required],
         "m":["",Validators.required],
         "a":["",Validators.required],
-        "exp":["",[this.wordCountValidator.bind(this)]],
+        "exp":["",Validators.required],
         "rad1":["",Validators.required],
         "rad2":["",Validators.required],
         "region":["",[Validators.required]],
@@ -120,6 +120,12 @@ result!:employee
     } else {
       this.breg = "border: green 2px solid;";
       this.reg = "";
+    }
+    if (this.formsignin.controls['exp'].errors?.['required']) {
+   
+      this.exp = "border: red 2px solid;";
+    } else {
+      this.exp = "border: green 2px solid;";
     }
   
     if (this.formsignin.controls['j'].invalid || this.formsignin.controls['m'].invalid || this.formsignin.controls['a'].invalid) {
@@ -289,7 +295,7 @@ result!:employee
       }
   
       // Vérification de la taille du fichier
-      if (file.size > maxSize) {
+     /* if (file.size > maxSize) {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -299,7 +305,7 @@ result!:employee
           e.target.value = '';
         });
         return;
-      }
+      }*/
   
   
       var reader = new FileReader();

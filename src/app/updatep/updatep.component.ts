@@ -70,7 +70,7 @@ bgov=""
         
         "num":["",Validators.required],
         "sp":["",[Validators.required]],
-        "exp":[""],
+        "exp":["",[Validators.required]],
         "gov":["",[Validators.required]],
         "city":["",[Validators.required]],
         "nom":["",[Validators.required]],
@@ -114,14 +114,11 @@ bgov=""
           this.formsignin.controls['a'].setValue(year);
           this.formsignin.controls['m'].setValue(month);
           this.formsignin.controls['j'].setValue(day);
-  
-          if (this.emp.files) {
-            this.filee = this.emp.files.find(file => file.nomfichier === 'image')!;
-            this.cv = this.emp.files.find(file => file.nomfichier === 'cv')!;
-            if (this.filee) {
-              this.url = 'data:' + this.filee.typefile + ';base64,' + this.filee.taillefile;
+          if(this.emp.fls!=undefined){
+            if(this.emp.fls['image']!=undefined){
+             this.url = 'uploads/'+this.emp.fls['image'];
             }
-          }
+             }
         } else {
           this.route.navigate(["/login"]);
         }
@@ -198,18 +195,18 @@ bgov=""
     
       if (file) {
         const maxSize = 2 * 1024 * 1024; // 2 Mo
-        if (file.size > maxSize) {
+      /*  if (file.size > maxSize) {
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
             text: 'La taille de l\'image ne doit pas dépasser 2 Mo.',
           });
           return;
-        }
+        }*/
     
         try {
           if (this.filee != undefined) {
-            const updatedFile = await this.fileserv.updatefile(file, this.filee.idfile).toPromise();
+            const updatedFile = await this.userserv.updatefile(file, this.emp.id,'image').toPromise();
             this.url = 'data:' + updatedFile!.typefile + ';base64,' + updatedFile!.taillefile;
             this.relod();
             Swal.fire({
@@ -220,7 +217,7 @@ bgov=""
               timer: 1500
             });
           } else {
-            const addedFile = await this.fileserv.addimage(file, this.emp.id).toPromise();
+            const addedFile = await this.userserv.addfile(file, this.emp.id,'image').toPromise();
             this.relod();
             Swal.fire({
               position: "top-end",
@@ -257,6 +254,13 @@ bgov=""
         } else {
           this.breg = "border: green 2px solid;";
           this.reg = "";
+        }
+        if (this.formsignin.controls['exp'].errors?.['required']) {
+          this.exp = "border: red 2px solid;";
+       
+        } else {
+          this.exp = "border: green 2px solid;";
+          
         }
     
         if (this.formsignin.controls['gov'].errors?.['required']) {
@@ -325,10 +329,10 @@ bgov=""
           // Appel au service pour mettre à jour l'utilisateur
           await this.userserv.updateuser(this.emp).toPromise();
     
-          if (this.cv != undefined) {
+          if (this.emp.fls['cv'] != undefined) {
             if (this.ncv != undefined) {
               // Mise à jour du CV
-              await this.fileserv.updatefile(this.ncv, this.cv.idfile).toPromise();
+              await this.userserv.updatefile(this.ncv, this.emp.id,'cv').toPromise();
               Swal.fire({
                 position: "top-end",
                 icon: "success",
@@ -348,7 +352,7 @@ bgov=""
           } else {
             if (this.ncv != undefined) {
               // Ajout du CV
-              await this.fileserv.addcv(this.ncv, this.emp.id).toPromise();
+              await this.userserv.addfile(this.ncv, this.emp.id,'cv').toPromise();
               Swal.fire({
                 position: "top-end",
                 icon: "success",

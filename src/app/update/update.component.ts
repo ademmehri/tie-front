@@ -192,6 +192,7 @@ this.userserv.updatefile(file.value,this.emp.id,'image').subscribe(
        this.emp.specialite=this.formsignin.controls['sp'].value;
        this.emp.gouvernerat=this.formsignin.controls['gov'].value;
        this.emp.email=this.formsignin.controls['email'].value;
+       this.emp.num=this.formsignin.controls['num'].value;
        this.userserv.updateuser(this.emp).subscribe(
         res=>{
           Swal.fire({

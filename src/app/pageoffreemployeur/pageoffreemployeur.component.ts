@@ -34,21 +34,19 @@ export class PageoffreemployeurComponent implements OnInit {
   
       if (offre) {
         this.off = offre;
-  
-        if (this.off.employeur.files != undefined) {
-          this.file = this.off.employeur.files.find(file => file.nomfichier === 'image')!;
-          if (this.file != undefined) {
-            this.url = 'assets/' + this.file.titlefile;
+        
+        if(this.off.employeur.fls!=undefined){
+          if(this.off.employeur.fls['image']!=undefined){
+         
+           this.url = 'uploads/'+this.off.employeur.fls['image'];
           }
-        }
+           }
       } else {
         // Gérer le cas où l'offre est undefined
         console.error('L\'offre est undefined');
       }
     } catch (error: any) {
       if (error.status === 403) {
-        this.route.navigate(["login"]);
-      } else {
         this.route.navigate(["login"]);
       }
     }

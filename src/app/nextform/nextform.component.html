@@ -126,14 +126,21 @@
          
           </div>
             <div class="region">
-                <label for="#">Expérience <span>(En moins de {{wordsRemaining}} mots)</span></label>
-             <div class="con">
-               <textarea name="x" [ngClass]="{'cl':formsignin.get('exp')?.errors?.['maxLengthExceeded'] }" class="cl"   id="" cols="60" placeholder="Experience" rows="10" formControlName="exp"></textarea>
-               <p class="wc">Mots: {{wordCount}}</p>
+                <label for="#">Expérience<span>*</span></label>
+             <div class="cont"  >
+              <i class='bx bxs-briefcase-alt-2'></i>
+                <select  name="select" formControlName="exp">
+                    <option value="">Expérience</option>
+                    <option value="0-6 mois">0-6 mois</option>
+                    <option value="6 mois-1 ans">6 mois-1 ans</option>
+                    <option value="1 ans-5 ans">1 ans-5 ans</option>
+                    <option value="5 ans et plus">5 ans et plus</option>
+                   
+                   </select>
              </div>
            
             </div>
-          
+       
             <div class="region">
                 <label for="#">Sexe<span>*</span></label>
              <div class="rad">
@@ -145,8 +152,8 @@
             <div class="region">
               <label for="#">Etat<span>*</span></label>
            <div class="rad">
-             <input type="radio"   formControlName="rad2" value="Stagiere"> <span>Stagiaire</span>&nbsp;&nbsp;&nbsp;
-             <input type="radio"  formControlName="rad2" value="Employee"> <span>Employé</span>
+             <input type="radio"   formControlName="rad2" value="Stagiaire"> <span>Stagiaire</span>&nbsp;&nbsp;&nbsp;
+             <input type="radio"  formControlName="rad2" value="Employé(e)"> <span>Employé(e)</span>
             </div>
                   </div>
                   <p class="m">{{etat}}</p>

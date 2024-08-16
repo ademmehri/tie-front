@@ -21,8 +21,8 @@
             <div class="nom">
 <p class="titre1">{{emp.nom}}</p>
             </div>
-            <div class="cv" *ngIf="cv" >
-                <a (click)="showcv()" >Voir CV</a>
+            <div class="cv" *ngIf="aff" >
+                <a  target="_blank" href="uploads/{{this.emp.fls['cv']}}">Voir CV</a>
              </div>
         </div>
         <div class="body">
@@ -54,7 +54,7 @@
             </div>
             <p class="error">{{result1}}</p>
             <div class="btt">
-                <div class="an" (click)="annuler()">
+                <div class="an" routerLink="/pagepatron">
                   <a>Annuler</a>
                 </div>
                 <div class="b" (click)="onsubmit()" >

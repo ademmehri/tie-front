@@ -65,8 +65,8 @@ export class SignuppComponent {
         gouvernerat: this.formsignin.controls['gov'].value,
         num: this.formsignin.controls['numero'].value,
         specialite: this.formsignin.controls['sp'].value,
-        pack: 3,
-        duree: 2
+        duree: 2,
+        pack:1
       } as employee;
 
       try {

@@ -359,7 +359,7 @@ height: 100%;
     padding: 10px;
     margin-bottom: 30px;
 }
-.cn2 .input{
+.cn2 .inputt{
     width: 607px;
     height: 150px;
     border: none;
@@ -367,6 +367,13 @@ height: 100%;
     padding: 10px;
     margin-bottom: 30px;
 }
+.err input{
+    border-bottom: 2px solid red;
+}
+.err .inputt{
+    border-bottom: 2px solid red;
+}
+
 .bt{
     width: 100px;
     height: 40px;
@@ -474,6 +481,9 @@ a{
 .i1 input{
     outline: none;
 }
+.i1 textarea{
+    outline: none;
+}
 #carouselExampleIndicators {
     width: 100%;
  
@@ -508,10 +518,7 @@ a{
     position: relative;
   }
 
-  .wrapper i:active{
-  
-  }
-  
+
   .wrapper .carousel{
     display: grid;
     grid-auto-flow: column;
@@ -739,6 +746,9 @@ font-size: 17px;
         padding: 10px;
 
     }
+    .i1 .inputt{
+        width: 100%;
+    }
 }
 @media screen and (min-width:601px) and  (max-width:1280px)  {
     .section{
@@ -869,6 +879,9 @@ margin: 5px;
         font-size: 35px;
         
       }
+      .i1 .inputt{
+        width: 100%;
+    }
 }
 /*@media screen and (min-width:840px) and  (max-width:1024px)  {
     .section{
