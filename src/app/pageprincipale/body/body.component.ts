@@ -19,11 +19,11 @@ export class BodyComponent implements AfterViewInit {
 constructor(private userserv:UserService,private fb:FormBuilder){
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
-  this.userserv.getnbsp().subscribe(
+  /*this.userserv.getnbsp().subscribe(
     res=>{
       this.reponse=res
     }
-  )
+  )*/
   this.formsignin=this.fb.group(
     {
     
