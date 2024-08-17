@@ -100,7 +100,7 @@ border-radius: 10px;
 }
 .card h2{
 letter-spacing: 1px;
-    font-weight: 900;
+ font-weight: 600;
    color: #2772D6;
 }
 .card p{
@@ -335,6 +335,18 @@ order: 1;
     justify-content: center;
     padding-left: 0px;
     padding: 20px;
+}
+.card h2{
+    font-size: 25px;
+}
+.card p{
+    font-size: 14px;
+}
+.r{
+    font-size: 25px;
+}
+.nb p{
+    font-size: 14px;
 }
 
 }
